@@ -17,7 +17,7 @@ namespace testeLeadSoft.Controllers
 			this.context = context;
 		}
 
-		[HttpGet]
+		[HttpGet("{authorId}")]
 		public async Task<ActionResult<List<Article>>> Get(Guid authorId)
 		{
 			var articles = await this.context.Articles
@@ -69,6 +69,21 @@ namespace testeLeadSoft.Controllers
 			dbArticle.Description = request.Description;
 			dbArticle.Text = request.Text;
 
+			await this.context.SaveChangesAsync();
+
+			return Ok(await this.context.Articles.ToListAsync());
+		}
+
+		[HttpDelete("{ArticleId}")]
+		public async Task<ActionResult<List<Article>>> DeleteArticle(Guid ArticleId)
+		{
+			var dbArticle = await this.context.Articles.FindAsync(ArticleId);
+			if (dbArticle == null)
+			{
+				return BadRequest("Article not found.");
+			}
+
+			this.context.Articles.Remove(dbArticle);
 			await this.context.SaveChangesAsync();
 
 			return Ok(await this.context.Articles.ToListAsync());
