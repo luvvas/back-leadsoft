@@ -28,7 +28,7 @@ namespace testeLeadSoft.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<List<Author>>> AddArticle(CreateArticleDto request)
+		public async Task<ActionResult<List<Article>>> AddArticle(CreateArticleDto request)
 		{
 			var author = await this.context.Authors.FindAsync(request.AuthorId);
 			if(author == null)
@@ -45,6 +45,30 @@ namespace testeLeadSoft.Controllers
 			};
 
 			this.context.Articles.Add(newArticle);
+			await this.context.SaveChangesAsync();
+
+			return Ok(await this.context.Articles.ToListAsync());
+		}
+
+		[HttpPut]
+		public async Task<ActionResult<List<Article>>> UpdateArticle(CreateArticleDto request)
+		{
+			var dbAuthor = await this.context.Authors.FindAsync(request.AuthorId);
+			if(dbAuthor == null)
+			{
+				return BadRequest("Author not found.");
+			}
+
+			var dbArticle = await this.context.Articles.FindAsync(request.Id); 
+			if(dbArticle == null)
+			{
+				return BadRequest("Article not found.");
+			}
+
+			dbArticle.Title = request.Title;
+			dbArticle.Description = request.Description;
+			dbArticle.Text = request.Text;
+
 			await this.context.SaveChangesAsync();
 
 			return Ok(await this.context.Articles.ToListAsync());

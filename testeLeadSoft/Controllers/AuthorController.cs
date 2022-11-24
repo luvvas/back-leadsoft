@@ -25,7 +25,7 @@ namespace testeLeadSoft.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<List<Author>>> AddAuthor(CreateAuthor request)
+		public async Task<ActionResult<List<Author>>> AddAuthor(CreateAuthorDto request)
 		{
 			var newAuthor = new Author
 			{

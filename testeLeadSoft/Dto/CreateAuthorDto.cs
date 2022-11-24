@@ -1,10 +1,12 @@
 ﻿using System.Text.Json.Serialization;
+
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Dto
 {
 	public class CreateAuthorDto
 	{
+		[JsonIgnore]
 		public Guid Id { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }

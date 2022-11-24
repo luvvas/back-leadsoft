@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Dto
