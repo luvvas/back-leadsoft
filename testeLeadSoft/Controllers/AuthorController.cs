@@ -37,5 +37,50 @@ namespace testeLeadSoft.Controllers
 
 			return Ok(await this.context.Authors.ToListAsync());
 		}
+
+		[HttpGet("{AuthorId}")]
+		public async Task<ActionResult<List<Author>>> Get(Guid AuthorId)
+		{
+			var author = await this.context.Authors.FindAsync(AuthorId);
+			if(author == null)
+			{
+				return BadRequest("Author not found");
+			}
+
+			return Ok(author);
+		}
+
+		[HttpPut]
+		public async Task<ActionResult<List<Author>>> UpdateHero(Author request)
+		{
+			var dbAuthor = await this.context.Authors.FindAsync(request.Id);
+			if (dbAuthor == null)
+			{
+				return BadRequest("Author not found.");
+			}
+
+			dbAuthor.FirstName = request.FirstName;
+			dbAuthor.LastName = request.LastName;
+			dbAuthor.Age = request.Age;
+
+			await this.context.SaveChangesAsync();
+
+			return Ok(await this.context.Authors.ToListAsync());
+		}
+
+		[HttpDelete("{AuthorId}")]
+		public async Task<ActionResult<List<Author>>> DeleteAuthor(Guid AuthorId)
+		{
+			var dbAuthor = await this.context.Authors.FindAsync(AuthorId);
+			if (dbAuthor == null)
+			{
+				return BadRequest("Author not found.");
+			}
+
+			this.context.Authors.Remove(dbAuthor);
+			await this.context.SaveChangesAsync();
+
+			return Ok(await this.context.Authors.ToListAsync());
+		}
 	}
 }
