@@ -38,6 +38,23 @@ namespace testeLeadSoft.Controllers
 			return Ok(await this.context.Categories.ToListAsync());
 		}
 
+		[HttpPut]
+		public async Task<ActionResult<List<Author>>> UpdateCategory(CreateCategoryDto request)
+		{
+			var dbCategory = await this.context.Categories.FindAsync(request.Id);
+			if (dbCategory == null)
+			{
+				return BadRequest("Category not found.");
+			}
+
+			dbCategory.Name = request.Name;
+			dbCategory.Type = request.Type;
+
+			await this.context.SaveChangesAsync();
+
+			return Ok(await this.context.Authors.ToListAsync());
+		}
+
 		[HttpDelete("categoryId")]
 		public async Task<ActionResult<List<Category>>> DeleteCategory(Guid categoryId)
 		{
@@ -46,6 +63,9 @@ namespace testeLeadSoft.Controllers
 			{
 				return BadRequest("Category not found");
 			}
+
+			//Recebe o nome
+			//Console.WriteLine(dbCategory.Name);
 
 			this.context.Categories.Remove(dbCategory);
 			await this.context.SaveChangesAsync();
