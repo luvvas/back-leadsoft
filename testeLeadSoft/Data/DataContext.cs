@@ -9,5 +9,6 @@ namespace testeLeadSoft.Data
 		public DataContext(DbContextOptions<DataContext> options) : base (options) { }
 	
 		public DbSet<Author> Authors { get; set; }
+		public DbSet<Article> Articles { get; set; }
 	}
 }
