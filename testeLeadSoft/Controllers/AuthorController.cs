@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using testeLeadSoft.Data;
+using testeLeadSoft.Dto;
+using testeLeadSoft.Migrations;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Controllers
@@ -23,7 +25,7 @@ namespace testeLeadSoft.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<List<Author>>> AddAuthor(Author request)
+		public async Task<ActionResult<List<Author>>> AddAuthor(CreateAuthor request)
 		{
 			var newAuthor = new Author
 			{
@@ -51,7 +53,7 @@ namespace testeLeadSoft.Controllers
 		}
 
 		[HttpPut]
-		public async Task<ActionResult<List<Author>>> UpdateHero(Author request)
+		public async Task<ActionResult<List<Author>>> UpdateHero(CreateAuthorDto request)
 		{
 			var dbAuthor = await this.context.Authors.FindAsync(request.Id);
 			if (dbAuthor == null)
