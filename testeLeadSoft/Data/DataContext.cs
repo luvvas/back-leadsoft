@@ -10,5 +10,6 @@ namespace testeLeadSoft.Data
 	
 		public DbSet<Author> Authors { get; set; }
 		public DbSet<Article> Articles { get; set; }
+		public DbSet<Category> Categories { get; set; }
 	}
 }

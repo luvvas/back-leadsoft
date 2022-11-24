@@ -12,8 +12,8 @@ using testeLeadSoft.Data;
 namespace testeLeadSoft.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221124062550_CreateArticle")]
-    partial class CreateArticle
+    [Migration("20221124183856_CreateArticleCategory")]
+    partial class CreateArticleCategory
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace testeLeadSoft.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
@@ -49,6 +52,8 @@ namespace testeLeadSoft.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Articles");
                 });
@@ -75,6 +80,25 @@ namespace testeLeadSoft.Migrations
                     b.ToTable("Authors");
                 });
 
+            modelBuilder.Entity("testeLeadSoft.Models.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("testeLeadSoft.Models.Article", b =>
                 {
                     b.HasOne("testeLeadSoft.Models.Author", "Author")
@@ -83,10 +107,23 @@ namespace testeLeadSoft.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("testeLeadSoft.Models.Category", "Category")
+                        .WithMany("Articles")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Author");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("testeLeadSoft.Models.Author", b =>
+                {
+                    b.Navigation("Articles");
+                });
+
+            modelBuilder.Entity("testeLeadSoft.Models.Category", b =>
                 {
                     b.Navigation("Articles");
                 });
