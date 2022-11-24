@@ -33,7 +33,15 @@ namespace testeLeadSoft.Controllers
 			var author = await this.context.Authors.FindAsync(request.AuthorId);
 			if(author == null)
 			{
-				return BadRequest("Author not found");
+				return BadRequest("Author not found.");
+			}
+
+			// Pode ser que o usuário passe o categoryId ou não
+			// Resolver isso
+			var category = await this.context.Categories.FindAsync(request.CategoryId);
+			if(category == null)
+			{
+				return BadRequest("Category not found.");
 			}
 
 			var newArticle = new Article
@@ -41,7 +49,8 @@ namespace testeLeadSoft.Controllers
 				Title = request.Title,
 				Description = request.Description,
 				Text = request.Text,
-				Author = author
+				Author = author,
+				Category = category
 			};
 
 			this.context.Articles.Add(newArticle);

@@ -70,7 +70,7 @@ namespace testeLeadSoft.Controllers
 			return Ok(await this.context.Authors.ToListAsync());
 		}
 
-		[HttpDelete("{AuthorId}")]
+		[HttpDelete("{authorId}")]
 		public async Task<ActionResult<List<Author>>> DeleteAuthor(Guid authorId)
 		{
 			var dbAuthor = await this.context.Authors.FindAsync(authorId);

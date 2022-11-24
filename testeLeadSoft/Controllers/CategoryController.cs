@@ -52,10 +52,10 @@ namespace testeLeadSoft.Controllers
 
 			await this.context.SaveChangesAsync();
 
-			return Ok(await this.context.Authors.ToListAsync());
+			return Ok(await this.context.Categories.ToListAsync());
 		}
 
-		[HttpDelete("categoryId")]
+		[HttpDelete("{categoryId}")]
 		public async Task<ActionResult<List<Category>>> DeleteCategory(Guid categoryId)
 		{
 			var dbCategory = await this.context.Categories.FindAsync(categoryId);
