@@ -39,9 +39,9 @@ namespace testeLeadSoft.Controllers
 		}
 
 		[HttpGet("{AuthorId}")]
-		public async Task<ActionResult<List<Author>>> Get(Guid AuthorId)
+		public async Task<ActionResult<Author>> Get(Guid authorId)
 		{
-			var author = await this.context.Authors.FindAsync(AuthorId);
+			var author = await this.context.Authors.FindAsync(authorId);
 			if(author == null)
 			{
 				return BadRequest("Author not found");
@@ -69,9 +69,9 @@ namespace testeLeadSoft.Controllers
 		}
 
 		[HttpDelete("{AuthorId}")]
-		public async Task<ActionResult<List<Author>>> DeleteAuthor(Guid AuthorId)
+		public async Task<ActionResult<List<Author>>> DeleteAuthor(Guid authorId)
 		{
-			var dbAuthor = await this.context.Authors.FindAsync(AuthorId);
+			var dbAuthor = await this.context.Authors.FindAsync(authorId);
 			if (dbAuthor == null)
 			{
 				return BadRequest("Author not found.");
