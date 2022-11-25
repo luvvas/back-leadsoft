@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 using testeLeadSoft.Data;
 
@@ -6,7 +7,21 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(s =>
+{
+	s.SwaggerDoc("v1", new OpenApiInfo
+	{
+		Title = "testeLeadSoft API",
+		Description = "A sample ASP.NET API",
+		Contact = new OpenApiContact
+		{
+			Name = "Lucas Machado",
+			Email = "lmachado72@outlook.com",
+			Url = new Uri("https://github.com/luvvas")
+		},
+		Version = "v1"
+	});
+});
 
 builder.Services.AddEntityFrameworkNpgsql()
 	.AddDbContext<DataContext>(options =>
