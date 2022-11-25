@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-using testeLeadSoft.Data;
 using testeLeadSoft.Dto;
 using testeLeadSoft.Models;
 using testeLeadSoft.Services.AuthorService;
@@ -14,7 +12,7 @@ namespace testeLeadSoft.Controllers
 	{
 		private readonly IAuthorService authorService;
 
-		public AuthorController(DataContext context, IAuthorService authorService)
+		public AuthorController(IAuthorService authorService)
 		{
 			this.authorService = authorService;
 		}
