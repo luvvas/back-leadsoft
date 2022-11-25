@@ -6,10 +6,10 @@ namespace testeLeadSoft.Services.AuthorService
 {
 	public interface IAuthorService
 	{
-		Task<List<Author>> Get();
-		Task<List<Author>> AddAuthor(CreateAuthorDto request);
-		Task<Author> Get(Guid authorId);
-		Task<List<Author>> UpdateAuthor(CreateAuthorDto request);
-		Task<List<Author>> DeleteAuthor(Guid authorId);
+		Task<ServiceResponse<List<Author>>> Get();
+		Task<ServiceResponse<List<Author>>> AddAuthor(CreateAuthorDto request);
+		Task<ServiceResponse<Author>> Get(Guid authorId);
+		Task<ServiceResponse<List<Author>>> UpdateAuthor(CreateAuthorDto request);
+		Task<ServiceResponse<List<Author>>> DeleteAuthor(Guid authorId);
 	}
 }
