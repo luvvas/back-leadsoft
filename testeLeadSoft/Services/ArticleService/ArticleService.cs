@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using testeLeadSoft.Data;
 using testeLeadSoft.Dto;
 using testeLeadSoft.Models;
@@ -14,7 +13,7 @@ namespace testeLeadSoft.Services.ArticleService
 			this.context = context;
 		}
 
-		public async Task<ActionResult<List<Article>>> AddArticle(CreateArticleDto request)
+		public async Task<List<Article>> AddArticle(CreateArticleDto request)
 		{
 			var author = await this.context.Authors.FindAsync(request.AuthorId);
 			if (author == null)
@@ -45,7 +44,7 @@ namespace testeLeadSoft.Services.ArticleService
 			return await this.context.Articles.ToListAsync();
 		}
 
-		public async Task<ActionResult<List<Article>>> DeleteArticle(Guid articleId)
+		public async Task<List<Article>> DeleteArticle(Guid articleId)
 		{
 			var dbArticle = await this.context.Articles.FindAsync(articleId);
 			if (dbArticle == null)
@@ -60,7 +59,7 @@ namespace testeLeadSoft.Services.ArticleService
 			return await this.context.Articles.ToListAsync();
 		}
 
-		public async Task<ActionResult<List<Article>>> Get(Guid authorId)
+		public async Task<List<Article>> Get(Guid authorId)
 		{
 			var articles = await this.context.Articles
 				.Where(a => a.AuthorId == authorId)
@@ -69,7 +68,7 @@ namespace testeLeadSoft.Services.ArticleService
 			return articles;
 		}
 
-		public async Task<ActionResult<List<Article>>> UpdateArticle(CreateArticleDto request)
+		public async Task<List<Article>> UpdateArticle(CreateArticleDto request)
 		{
 			var dbAuthor = await this.context.Authors.FindAsync(request.AuthorId);
 			if (dbAuthor == null)

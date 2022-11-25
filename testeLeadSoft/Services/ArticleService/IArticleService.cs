@@ -6,9 +6,9 @@ namespace testeLeadSoft.Services.ArticleService
 {
 	public interface IArticleService
 	{
-		Task<ActionResult<List<Article>>> Get(Guid authorId);
-		Task<ActionResult<List<Article>>> AddArticle(CreateArticleDto request);
-		Task<ActionResult<List<Article>>> UpdateArticle(CreateArticleDto request);
-		Task<ActionResult<List<Article>>> DeleteArticle(Guid articleId);
+		Task<List<Article>> Get(Guid authorId);
+		Task<List<Article>> AddArticle(CreateArticleDto request);
+		Task<List<Article>> UpdateArticle(CreateArticleDto request);
+		Task<List<Article>> DeleteArticle(Guid articleId);
 	}
 }
