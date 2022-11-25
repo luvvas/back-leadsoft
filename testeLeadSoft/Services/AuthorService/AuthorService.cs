@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using testeLeadSoft.Data;
 using testeLeadSoft.Dto;
 using testeLeadSoft.Models;
@@ -30,24 +31,54 @@ namespace testeLeadSoft.Services.AuthorService
 			return await this.context.Authors.ToListAsync();
 		}
 
-		public Task<ActionResult<List<Author>>> DeleteAuthor(Guid authorId)
+		public async Task<ActionResult<List<Author>>> DeleteAuthor(Guid authorId)
 		{
-			throw new NotImplementedException();
+			var dbAuthor = await this.context.Authors.FindAsync(authorId);
+			if (dbAuthor == null)
+			{
+				// return BadRequest("Author not found");
+				return null;
+			}
+
+			this.context.Authors.Remove(dbAuthor);
+			await this.context.SaveChangesAsync();
+
+			return await this.context.Authors.ToListAsync();
 		}
 
-		public Task<ActionResult<List<Author>>> Get()
+		public async Task<ActionResult<List<Author>>> Get()
 		{
-			throw new NotImplementedException();
+			return await this.context.Authors.ToListAsync();
 		}
 
-		public Task<ActionResult<Author>> Get(Guid authorId)
+		public async Task<ActionResult<Author>> Get(Guid authorId)
 		{
-			throw new NotImplementedException();
+			var author = await this.context.Authors.FindAsync(authorId);
+			if (author == null)
+			{
+				// BadRequest("Author not found");
+				return null;
+			}
+
+			return author;
 		}
 
-		public Task<ActionResult<List<Author>>> UpdateHero(CreateAuthorDto request)
+		public async Task<ActionResult<List<Author>>> UpdateAuthor(CreateAuthorDto request)
 		{
-			throw new NotImplementedException();
+			var dbAuthor = await this.context.Authors.FindAsync(request.Id);
+			if (dbAuthor == null)
+			{
+				// BadRequest("Author not found.")
+				return null;
+			}
+
+			dbAuthor.FirstName = request.FirstName;
+			dbAuthor.LastName = request.LastName;
+			dbAuthor.Age = request.Age;
+
+			await this.context.SaveChangesAsync();
+
+			return await this.context.Authors.ToListAsync();
 		}
 	}
 }

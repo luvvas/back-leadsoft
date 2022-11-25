@@ -12,12 +12,10 @@ namespace testeLeadSoft.Controllers
 	[ApiController]
 	public class AuthorController : ControllerBase
 	{
-		private readonly DataContext context;
 		private readonly IAuthorService authorService;
 
 		public AuthorController(DataContext context, IAuthorService authorService)
 		{
-			this.context = context;
 			this.authorService = authorService;
 		}
 
@@ -28,7 +26,7 @@ namespace testeLeadSoft.Controllers
 		[HttpGet]
 		public async Task<ActionResult<List<Author>>> Get()
 		{
-			return Ok(await this.context.Authors.ToListAsync());
+			return Ok(await this.authorService.Get());
 		}
 
 		/// <summary>
@@ -39,7 +37,7 @@ namespace testeLeadSoft.Controllers
 		[HttpPost]
 		public async Task<ActionResult<List<Author>>> AddAuthor(CreateAuthorDto request)
 		{
-			return await this.authorService.AddAuthor(request);
+			return Ok(await this.authorService.AddAuthor(request));
 		}
 		
 		/// <summary>
@@ -50,13 +48,7 @@ namespace testeLeadSoft.Controllers
 		[HttpGet("{authorId}")]
 		public async Task<ActionResult<Author>> Get(Guid authorId)
 		{
-			var author = await this.context.Authors.FindAsync(authorId);
-			if(author == null)
-			{
-				return BadRequest("Author not found");
-			}
-
-			return Ok(author);
+			return Ok(await this.authorService.Get(authorId));
 		}
 
 		/// <summary>
@@ -65,21 +57,9 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<List<Author>>> UpdateHero(CreateAuthorDto request)
+		public async Task<ActionResult<List<Author>>> UpdateAuthor(CreateAuthorDto request)
 		{
-			var dbAuthor = await this.context.Authors.FindAsync(request.Id);
-			if (dbAuthor == null)
-			{
-				return BadRequest("Author not found.");
-			}
-
-			dbAuthor.FirstName = request.FirstName;
-			dbAuthor.LastName = request.LastName;
-			dbAuthor.Age = request.Age;
-
-			await this.context.SaveChangesAsync();
-
-			return Ok(await this.context.Authors.ToListAsync());
+			return Ok(await this.authorService.UpdateAuthor(request));
 		}
 
 		/// <summary>
@@ -90,16 +70,12 @@ namespace testeLeadSoft.Controllers
 		[HttpDelete("{authorId}")]
 		public async Task<ActionResult<List<Author>>> DeleteAuthor(Guid authorId)
 		{
-			var dbAuthor = await this.context.Authors.FindAsync(authorId);
-			if (dbAuthor == null)
-			{
-				return BadRequest("Author not found.");
-			}
+			//if(await this.authorService.DeleteAuthor(authorId) == null)
+			//{
+			//	return BadRequest("Author not found.");
+			//}
 
-			this.context.Authors.Remove(dbAuthor);
-			await this.context.SaveChangesAsync();
-
-			return Ok(await this.context.Authors.ToListAsync());
+			return Ok(await this.authorService.DeleteAuthor(authorId));
 		}
 	}
 }

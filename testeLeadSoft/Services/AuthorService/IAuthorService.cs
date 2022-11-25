@@ -9,7 +9,7 @@ namespace testeLeadSoft.Services.AuthorService
 		Task<ActionResult<List<Author>>> Get();
 		Task<ActionResult<List<Author>>> AddAuthor(CreateAuthorDto request);
 		Task<ActionResult<Author>> Get(Guid authorId);
-		Task<ActionResult<List<Author>>> UpdateHero(CreateAuthorDto request);
+		Task<ActionResult<List<Author>>> UpdateAuthor(CreateAuthorDto request);
 		Task<ActionResult<List<Author>>> DeleteAuthor(Guid authorId);
 	}
 }
