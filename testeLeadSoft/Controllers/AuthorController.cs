@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using testeLeadSoft.Data;
 using testeLeadSoft.Dto;
-using testeLeadSoft.Migrations;
 using testeLeadSoft.Models;
+using testeLeadSoft.Services.AuthorService;
 
 namespace testeLeadSoft.Controllers
 {
@@ -12,10 +13,12 @@ namespace testeLeadSoft.Controllers
 	public class AuthorController : ControllerBase
 	{
 		private readonly DataContext context;
+		private readonly IAuthorService authorService;
 
-		public AuthorController(DataContext context)
+		public AuthorController(DataContext context, IAuthorService authorService)
 		{
 			this.context = context;
+			this.authorService = authorService;
 		}
 
 		/// <summary>
@@ -36,17 +39,7 @@ namespace testeLeadSoft.Controllers
 		[HttpPost]
 		public async Task<ActionResult<List<Author>>> AddAuthor(CreateAuthorDto request)
 		{
-			var newAuthor = new Author
-			{
-				FirstName = request.FirstName,
-				LastName = request.LastName,
-				Age = request.Age
-			};
-
-			this.context.Authors.Add(newAuthor);
-			await this.context.SaveChangesAsync();
-
-			return Ok(await this.context.Authors.ToListAsync());
+			return await this.authorService.AddAuthor(request);
 		}
 		
 		/// <summary>

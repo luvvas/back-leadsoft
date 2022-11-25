@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using testeLeadSoft.Data;
+using testeLeadSoft.Services.AuthorService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,9 @@ builder.Services.AddSwaggerGen(s =>
 
 	s.IncludeXmlComments(xmlPath);
 });
+
+// Necessário para o repository pattern
+builder.Services.AddScoped<IAuthorService, AuthorService>();
 
 builder.Services.AddEntityFrameworkNpgsql()
 	.AddDbContext<DataContext>(options =>
