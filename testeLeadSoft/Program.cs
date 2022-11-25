@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-
+using System.Reflection;
 using testeLeadSoft.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +21,11 @@ builder.Services.AddSwaggerGen(s =>
 		},
 		Version = "v1"
 	});
+
+	var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+	var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+	s.IncludeXmlComments(xmlPath);
 });
 
 builder.Services.AddEntityFrameworkNpgsql()

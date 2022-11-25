@@ -18,12 +18,21 @@ namespace testeLeadSoft.Controllers
 			this.context = context;
 		}
 
+		/// <summary>
+		/// Get all authors on Database
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		public async Task<ActionResult<List<Author>>> Get()
 		{
 			return Ok(await this.context.Authors.ToListAsync());
 		}
 
+		/// <summary>
+		/// Include a Author on Database
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public async Task<ActionResult<List<Author>>> AddAuthor(CreateAuthorDto request)
 		{
@@ -39,8 +48,13 @@ namespace testeLeadSoft.Controllers
 
 			return Ok(await this.context.Authors.ToListAsync());
 		}
-
-		[HttpGet("{AuthorId}")]
+		
+		/// <summary>
+		/// Get a author by it's id
+		/// </summary>
+		/// <param name="authorId"></param>
+		/// <returns></returns>
+		[HttpGet("{authorId}")]
 		public async Task<ActionResult<Author>> Get(Guid authorId)
 		{
 			var author = await this.context.Authors.FindAsync(authorId);
@@ -52,6 +66,11 @@ namespace testeLeadSoft.Controllers
 			return Ok(author);
 		}
 
+		/// <summary>
+		/// Update a author on Database
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		[HttpPut]
 		public async Task<ActionResult<List<Author>>> UpdateHero(CreateAuthorDto request)
 		{
@@ -70,6 +89,11 @@ namespace testeLeadSoft.Controllers
 			return Ok(await this.context.Authors.ToListAsync());
 		}
 
+		/// <summary>
+		/// Delete a author on Database
+		/// </summary>
+		/// <param name="authorId"></param>
+		/// <returns></returns>
 		[HttpDelete("{authorId}")]
 		public async Task<ActionResult<List<Author>>> DeleteAuthor(Guid authorId)
 		{

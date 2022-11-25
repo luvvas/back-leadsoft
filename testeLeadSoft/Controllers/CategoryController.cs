@@ -17,12 +17,21 @@ namespace testeLeadSoft.Controllers
 			this.context = context;
 		}
 
+		/// <summary>
+		/// Get all categories on Database
+		/// </summary>
+		/// <returns></returns>
 		[HttpGet]
 		public async Task<ActionResult<List<Category>>> Get()
 		{
 			return Ok(await this.context.Categories.ToListAsync());
 		}
 
+		/// <summary>
+		/// Include a Category on Database
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public async Task<ActionResult<List<Category>>> AddCategory(CreateCategoryDto request)
 		{
@@ -38,6 +47,11 @@ namespace testeLeadSoft.Controllers
 			return Ok(await this.context.Categories.ToListAsync());
 		}
 
+		/// <summary>
+		/// Update a category on Database
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		[HttpPut]
 		public async Task<ActionResult<List<Author>>> UpdateCategory(CreateCategoryDto request)
 		{
@@ -55,6 +69,11 @@ namespace testeLeadSoft.Controllers
 			return Ok(await this.context.Categories.ToListAsync());
 		}
 
+		/// <summary>
+		/// Delete a category on Database
+		/// </summary>
+		/// <param name="categoryId"></param>
+		/// <returns></returns>
 		[HttpDelete("{categoryId}")]
 		public async Task<ActionResult<List<Category>>> DeleteCategory(Guid categoryId)
 		{

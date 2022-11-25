@@ -17,6 +17,11 @@ namespace testeLeadSoft.Controllers
 			this.context = context;
 		}
 
+		/// <summary>
+		/// Get a article by it's id
+		/// </summary>
+		/// <param name="authorId"></param>
+		/// <returns></returns>
 		[HttpGet("{authorId}")]
 		public async Task<ActionResult<List<Article>>> Get(Guid authorId)
 		{
@@ -27,6 +32,11 @@ namespace testeLeadSoft.Controllers
 			return articles;
 		}
 
+		/// <summary>
+		/// Include a article on Database
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		[HttpPost]
 		public async Task<ActionResult<List<Article>>> AddArticle(CreateArticleDto request)
 		{
@@ -36,8 +46,6 @@ namespace testeLeadSoft.Controllers
 				return BadRequest("Author not found.");
 			}
 
-			// Pode ser que o usuário passe o categoryId ou não
-			// Resolver isso
 			var category = await this.context.Categories.FindAsync(request.CategoryId);
 			if(category == null)
 			{
@@ -59,6 +67,11 @@ namespace testeLeadSoft.Controllers
 			return Ok(await this.context.Articles.ToListAsync());
 		}
 
+		/// <summary>
+		/// Update a article on Database
+		/// </summary>
+		/// <param name="request"></param>
+		/// <returns></returns>
 		[HttpPut]
 		public async Task<ActionResult<List<Article>>> UpdateArticle(CreateArticleDto request)
 		{
@@ -83,10 +96,15 @@ namespace testeLeadSoft.Controllers
 			return Ok(await this.context.Articles.ToListAsync());
 		}
 
-		[HttpDelete("{ArticleId}")]
-		public async Task<ActionResult<List<Article>>> DeleteArticle(Guid ArticleId)
+		/// <summary>
+		/// Delete a article on Database
+		/// </summary>
+		/// <param name="articleId"></param>
+		/// <returns></returns>
+		[HttpDelete("{articleId}")]
+		public async Task<ActionResult<List<Article>>> DeleteArticle(Guid articleId)
 		{
-			var dbArticle = await this.context.Articles.FindAsync(ArticleId);
+			var dbArticle = await this.context.Articles.FindAsync(articleId);
 			if (dbArticle == null)
 			{
 				return BadRequest("Article not found.");

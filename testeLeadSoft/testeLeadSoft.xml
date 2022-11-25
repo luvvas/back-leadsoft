@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>testeLeadSoft</name>
+    </assembly>
+    <members>
+        <member name="M:testeLeadSoft.Controllers.ArticleController.Get(System.Guid)">
+            <summary>
+            Get a article by it's id
+            </summary>
+            <param name="authorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.ArticleController.AddArticle(testeLeadSoft.Dto.CreateArticleDto)">
+            <summary>
+            Include a article on Database
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.ArticleController.UpdateArticle(testeLeadSoft.Dto.CreateArticleDto)">
+            <summary>
+            Update a article on Database
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.ArticleController.DeleteArticle(System.Guid)">
+            <summary>
+            Delete a article on Database
+            </summary>
+            <param name="articleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.AuthorController.Get">
+            <summary>
+            Get all authors on Database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.AuthorController.AddAuthor(testeLeadSoft.Dto.CreateAuthorDto)">
+            <summary>
+            Include a Author on Database
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.AuthorController.Get(System.Guid)">
+            <summary>
+            Get a author by it's id
+            </summary>
+            <param name="authorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.AuthorController.UpdateHero(testeLeadSoft.Dto.CreateAuthorDto)">
+            <summary>
+            Update a author on Database
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.AuthorController.DeleteAuthor(System.Guid)">
+            <summary>
+            Delete a author on Database
+            </summary>
+            <param name="authorId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.CategoryController.Get">
+            <summary>
+            Get all categories on Database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.CategoryController.AddCategory(testeLeadSoft.Dto.CreateCategoryDto)">
+            <summary>
+            Include a Category on Database
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.CategoryController.UpdateCategory(testeLeadSoft.Dto.CreateCategoryDto)">
+            <summary>
+            Update a category on Database
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.CategoryController.DeleteCategory(System.Guid)">
+            <summary>
+            Delete a category on Database
+            </summary>
+            <param name="categoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:testeLeadSoft.Migrations.CreateAuthor">
+            <inheritdoc />
+        </member>
+        <member name="M:testeLeadSoft.Migrations.CreateAuthor.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:testeLeadSoft.Migrations.CreateAuthor.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:testeLeadSoft.Migrations.CreateAuthor.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:testeLeadSoft.Migrations.CreateArticleCategory">
+            <inheritdoc />
+        </member>
+        <member name="M:testeLeadSoft.Migrations.CreateArticleCategory.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:testeLeadSoft.Migrations.CreateArticleCategory.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:testeLeadSoft.Migrations.CreateArticleCategory.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:testeLeadSoft.Migrations.CreateComment">
+            <inheritdoc />
+        </member>
+        <member name="M:testeLeadSoft.Migrations.CreateComment.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:testeLeadSoft.Migrations.CreateComment.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:testeLeadSoft.Migrations.CreateComment.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
