@@ -4,6 +4,12 @@
         <name>testeLeadSoft</name>
     </assembly>
     <members>
+        <member name="M:testeLeadSoft.Controllers.ArticleController.Get">
+            <summary>
+            Get all article on Database
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:testeLeadSoft.Controllers.ArticleController.Get(System.Guid)">
             <summary>
             Get a article by it's id

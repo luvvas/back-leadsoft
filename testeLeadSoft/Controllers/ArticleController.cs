@@ -17,6 +17,22 @@ namespace testeLeadSoft.Controllers
 		}
 
 		/// <summary>
+		/// Get all article on Database
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet]
+		public async Task<ActionResult<ServiceResponse<List<Article>>>> Get()
+		{
+			var response = await articleService.Get();
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
+		}
+
+		/// <summary>
 		/// Get a article by it's id
 		/// </summary>
 		/// <param name="authorId"></param>

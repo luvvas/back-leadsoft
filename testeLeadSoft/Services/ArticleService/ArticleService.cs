@@ -85,6 +85,21 @@ namespace testeLeadSoft.Services.ArticleService
 			return serviceResponse;
 		}
 
+		public async Task<ServiceResponse<List<Article>>> Get() { 
+			var serviceResponse = new ServiceResponse<List<Article>>();
+
+			try
+			{
+				serviceResponse.Data = await this.context.Articles.ToListAsync();
+			} catch(Exception ex) 
+			{ 
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message; 
+			}
+
+			return serviceResponse;
+		}
+
 		public async Task<ServiceResponse<List<Article>>> Get(Guid authorId)
 		{
 			var serviceResponse = new ServiceResponse<List<Article>>();
@@ -118,28 +133,20 @@ namespace testeLeadSoft.Services.ArticleService
 
 			try
 			{
-				var dbAuthor = await this.context.Authors.FindAsync(request.AuthorId);
-				if(dbAuthor != null)
+				var dbArticle = await this.context.Articles.FindAsync(request.Id);
+				if(dbArticle != null)
 				{
-					var dbArticle = await this.context.Articles.FindAsync(request.Id);
-					if(dbArticle != null)
-					{
-						dbArticle.Title = request.Title;
-						dbArticle.Description = request.Description;
-						dbArticle.Text = request.Text;
+					dbArticle.Title = request.Title;
+					dbArticle.Description = request.Description;
+					dbArticle.Text = request.Text;
 
-						await this.context.SaveChangesAsync();
+					await this.context.SaveChangesAsync();
 
-						serviceResponse.Data = await this.context.Articles.ToListAsync();
-					} else
-					{
-						serviceResponse.Success = false;
-						serviceResponse.Message = "Article not found";
-					}
+					serviceResponse.Data = await this.context.Articles.ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;
-					serviceResponse.Message = "Author not found";
+					serviceResponse.Message = "Article not found";
 				}
 			} catch (Exception ex)
 			{
