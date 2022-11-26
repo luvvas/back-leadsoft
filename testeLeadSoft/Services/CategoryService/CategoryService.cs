@@ -13,58 +13,101 @@ namespace testeLeadSoft.Services.CategoryService
 			this.context = context;
 		}
 
-		public async Task<List<Category>> AddCategory(CreateCategoryDto request)
+		public async Task<ServiceResponse<List<Category>>> AddCategory(CreateCategoryDto request)
 		{
-			var newCategory = new Category()
+			var serviceResponse = new ServiceResponse<List<Category>>();
+
+			try 
 			{
-				Name = request.Name,
-				Type = request.Type
-			};
+				var newCategory = new Category()
+				{
+					Name = request.Name,
+					Type = request.Type
+				};
 
-			this.context.Categories.Add(newCategory);
-			await this.context.SaveChangesAsync();
+				this.context.Categories.Add(newCategory);
+				await this.context.SaveChangesAsync();
 
-			return await this.context.Categories.ToListAsync();
-		}
-
-		public async Task<List<Category>> DeleteCategory(Guid categoryId)
-		{
-			var dbCategory = await this.context.Categories.FindAsync(categoryId);
-			if (dbCategory == null)
+				serviceResponse.Data = await this.context.Categories.ToListAsync();
+			} catch(Exception ex)
 			{
-				// BadRequest("Category not found")
-				return null;
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
 			}
 
-			//Recebe o nome
-			//Console.WriteLine(dbCategory.Name);
-
-			this.context.Categories.Remove(dbCategory);
-			await this.context.SaveChangesAsync();
-
-			return await this.context.Categories.ToListAsync();
+			return serviceResponse;
 		}
 
-		public async Task<List<Category>> Get()
+		public async Task<ServiceResponse<List<Category>>> DeleteCategory(Guid categoryId)
 		{
-			return await this.context.Categories.ToListAsync();
-		}
+			var serviceResponse = new ServiceResponse<List<Category>>();
 
-		public async Task<List<Category>> UpdateCategory(CreateCategoryDto request)
-		{
-			var dbCategory = await this.context.Categories.FindAsync(request.Id);
-			if (dbCategory == null)
+			try
 			{
-				// BadRequest("Category not found.")
-				return null;
+				var dbCategory = await this.context.Categories.FindAsync(categoryId);
+				if (dbCategory != null)
+				{
+					this.context.Categories.Remove(dbCategory);
+					await this.context.SaveChangesAsync();
+
+					serviceResponse.Data = await this.context.Categories.ToListAsync();
+				} else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Category not found.";
+				}
+			} catch (Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
 			}
 
-			dbCategory.Name = request.Name;
-			dbCategory.Type = request.Type;
+			return serviceResponse;
+		}
 
-			await this.context.SaveChangesAsync();
+		public async Task<ServiceResponse<List<Category>>> Get()
+		{
+			var serviceResponse = new ServiceResponse<List<Category>>();
 
-			return await this.context.Categories.ToListAsync();
+			try
+			{
+				serviceResponse.Data = await this.context.Categories.ToListAsync();
+			} catch (Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
+			}
+
+			return serviceResponse;
+		}
+
+		public async Task<ServiceResponse<List<Category>>> UpdateCategory(CreateCategoryDto request)
+		{
+			var serviceResponse = new ServiceResponse<List<Category>>();
+
+			try
+			{
+				var dbCategory = await this.context.Categories.FindAsync(request.Id);
+				if (dbCategory != null)
+				{
+					dbCategory.Name = request.Name;
+					dbCategory.Type = request.Type;
+
+					await this.context.SaveChangesAsync();
+
+					serviceResponse.Data = await this.context.Categories.ToListAsync();
+				} else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Category not found.";
+				}
+			} catch (Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
+			}
+
+			return serviceResponse;
 		}
 	}
 }
