@@ -38,18 +38,26 @@ namespace testeLeadSoft.Services.AuthorService
 		{
 			var serviceResponse = new ServiceResponse<List<Author>>();
 
-			var dbAuthor = await this.context.Authors.FindAsync(authorId);
-			if (dbAuthor == null)
+			try
 			{
-				// return BadRequest("Author not found");
-				return null;
+				var dbAuthor = await this.context.Authors.FindAsync(authorId);
+				if (dbAuthor != null)
+				{
+					this.context.Authors.Remove(dbAuthor);
+					await this.context.SaveChangesAsync();
+
+					serviceResponse.Data = await this.context.Authors.ToListAsync();
+				} else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Author not found;";
+				}
+			} catch( Exception ex ) 
+			{ 
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
 			}
-
-			this.context.Authors.Remove(dbAuthor);
-			await this.context.SaveChangesAsync();
-
-			serviceResponse.Data = await this.context.Authors.ToListAsync();
-
+			
 			return serviceResponse;
 		}
 
