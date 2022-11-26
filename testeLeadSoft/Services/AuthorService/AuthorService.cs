@@ -19,17 +19,24 @@ namespace testeLeadSoft.Services.AuthorService
 		{
 			var serviceResponse = new ServiceResponse<List<Author>>();
 
-			var newAuthor = new Author
+			try 
 			{
-				FirstName = request.FirstName,
-				LastName = request.LastName,
-				Age = request.Age
-			};
+				var newAuthor = new Author
+				{
+					FirstName = request.FirstName,
+					LastName = request.LastName,
+					Age = request.Age
+				};
 
-			this.context.Authors.Add(newAuthor);
-			await this.context.SaveChangesAsync();
+				this.context.Authors.Add(newAuthor);
+				await this.context.SaveChangesAsync();
 
-			serviceResponse.Data = await this.context.Authors.ToListAsync();
+				serviceResponse.Data = await this.context.Authors.ToListAsync();
+			} catch (Exception ex) 
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
+			}
 
 			return serviceResponse;
 		}
