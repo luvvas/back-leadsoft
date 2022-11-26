@@ -87,11 +87,29 @@ namespace testeLeadSoft.Services.ArticleService
 
 		public async Task<ServiceResponse<List<Article>>> Get(Guid authorId)
 		{
-			var articles = await this.context.Articles
+			var serviceResponse = new ServiceResponse<List<Article>>();
+
+			try
+			{
+				var articles = await this.context.Articles
 				.Where(a => a.AuthorId == authorId)
 				.ToListAsync();
 
-			return articles;
+				if (articles != null)
+				{
+					serviceResponse.Data = article;
+				} else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Article not found.";
+				}
+			} catch (Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
+			}
+
+			return serviceResponse;
 		}
 
 		public async Task<ServiceResponse<List<Article>>> UpdateArticle(CreateArticleDto request)
