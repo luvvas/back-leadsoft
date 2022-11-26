@@ -15,33 +15,47 @@ namespace testeLeadSoft.Services.ArticleService
 
 		public async Task<ServiceResponse<List<Article>>> AddArticle(CreateArticleDto request)
 		{
-			var author = await this.context.Authors.FindAsync(request.AuthorId);
-			if (author == null)
+			var serviceResponse = new ServiceResponse<List<Article>>();
+
+			try
 			{
-				// BadRequest("Author not found.")
-				return null;
+				var author = await this.context.Authors.FindAsync(request.AuthorId);
+
+				if (author != null)
+				{
+					var category = await this.context.Categories.FindAsync(request.CategoryId);
+					if (category != null)
+					{
+						var newArticle = new Article
+						{
+							Title = request.Title,
+							Description = request.Description,
+							Text = request.Text,
+							Author = author,
+							Category = category
+						};
+
+						this.context.Articles.Add(newArticle);
+						await this.context.SaveChangesAsync();
+
+						serviceResponse.Data = await this.context.Articles.ToListAsync();
+					} else
+					{
+						serviceResponse.Success = false;
+						serviceResponse.Message = "Category not found.";
+					}
+				} else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Author not found.";
+				}
+			} catch (Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
 			}
 
-			var category = await this.context.Categories.FindAsync(request.CategoryId);
-			if (category == null)
-			{
-				// BadRequest("Category not found.")
-				return null;
-			}
-
-			var newArticle = new Article
-			{
-				Title = request.Title,
-				Description = request.Description,
-				Text = request.Text,
-				Author = author,
-				Category = category
-			};
-
-			this.context.Articles.Add(newArticle);
-			await this.context.SaveChangesAsync();
-
-			return await this.context.Articles.ToListAsync();
+			return serviceResponse;
 		}
 
 		public async Task<ServiceResponse<List<Article>>> DeleteArticle(Guid articleId)
