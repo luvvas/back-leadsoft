@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
+﻿using Microsoft.EntityFrameworkCore;
+
 using testeLeadSoft.Data;
 using testeLeadSoft.Dto;
 using testeLeadSoft.Models;
@@ -66,14 +65,22 @@ namespace testeLeadSoft.Services.AuthorService
 		{
 			var serviceResponse = new ServiceResponse<Author>();
 
-			var author = await this.context.Authors.FindAsync(authorId);
-			if (author == null)
+			try
 			{
-				// BadRequest("Author not found");
-				return null;
+				var author = await this.context.Authors.FindAsync(authorId);
+				if (author != null)
+				{
+					serviceResponse.Data = author;
+				} else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Author not found.";
+				}
+			} catch(Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
 			}
-
-			serviceResponse.Data = author;
 
 			return serviceResponse;
 		}
@@ -82,21 +89,27 @@ namespace testeLeadSoft.Services.AuthorService
 		{
 			var serviceResponse = new ServiceResponse<List<Author>>();
 
-			var dbAuthor = await this.context.Authors.FindAsync(request.Id);
-			if (dbAuthor == null)
+			try
 			{
-				// BadRequest("Author not found.")
-				return null;
+				var dbAuthor = await this.context.Authors.FindAsync(request.Id);
+				if (dbAuthor != null)
+				{
+					dbAuthor.FirstName = request.FirstName;
+					dbAuthor.LastName = request.LastName;
+					dbAuthor.Age = request.Age;
+
+					await this.context.SaveChangesAsync();
+
+					serviceResponse.Data = await this.context.Authors.ToListAsync();
+				} else {
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Author not found.";
+				}
+			} catch(Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
 			}
-
-			dbAuthor.FirstName = request.FirstName;
-			dbAuthor.LastName = request.LastName;
-			dbAuthor.Age = request.Age;
-
-			await this.context.SaveChangesAsync();
-
-			serviceResponse.Data = await this.context.Authors.ToListAsync();
-
 			return serviceResponse;
 		}
 	}

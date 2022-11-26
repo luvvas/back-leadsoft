@@ -57,7 +57,13 @@ namespace testeLeadSoft.Controllers
 		[HttpPut]
 		public async Task<ActionResult<ServiceResponse<List<Author>>>> UpdateAuthor(CreateAuthorDto request)
 		{
-			return Ok(await this.authorService.UpdateAuthor(request));
+			var response = await this.authorService.UpdateAuthor(request);
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+			
+			return Ok(response);
 		}
 
 		/// <summary>
