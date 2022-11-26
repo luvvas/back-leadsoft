@@ -60,17 +60,29 @@ namespace testeLeadSoft.Services.ArticleService
 
 		public async Task<ServiceResponse<List<Article>>> DeleteArticle(Guid articleId)
 		{
-			var dbArticle = await this.context.Articles.FindAsync(articleId);
-			if (dbArticle == null)
+			var serviceResponse = new ServiceResponse<List<Article>>();
+
+			try
 			{
-				// BadRequest("Article not found.")
-				return null;
+				var dbArticle = await this.context.Articles.FindAsync(articleId);
+				if (dbArticle != null)
+				{
+					this.context.Articles.Remove(dbArticle);
+					await this.context.SaveChangesAsync();
+
+					serviceResponse.Data = await this.context.Articles.ToListAsync();
+				} else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Article not found.";
+				}
+			} catch (Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
 			}
 
-			this.context.Articles.Remove(dbArticle);
-			await this.context.SaveChangesAsync();
-
-			return await this.context.Articles.ToListAsync();
+			return serviceResponse;
 		}
 
 		public async Task<ServiceResponse<List<Article>>> Get(Guid authorId)
