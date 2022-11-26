@@ -24,7 +24,13 @@ namespace testeLeadSoft.Controllers
 		[HttpGet]
 		public async Task<ActionResult<ServiceResponse<List<Author>>>> Get()
 		{
-			return Ok(await this.authorService.Get());
+			var response = await authorService.Get();
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+			
+			return Ok(response);
 		}
 
 		/// <summary>
@@ -35,7 +41,13 @@ namespace testeLeadSoft.Controllers
 		[HttpPost]
 		public async Task<ActionResult<ServiceResponse<List<Author>>>> AddAuthor(CreateAuthorDto request)
 		{
-			return Ok(await this.authorService.AddAuthor(request));
+			var response = await this.authorService.AddAuthor(request);
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+			
+			return Ok(response);
 		}
 		
 		/// <summary>
@@ -46,7 +58,13 @@ namespace testeLeadSoft.Controllers
 		[HttpGet("{authorId}")]
 		public async Task<ActionResult<ServiceResponse<Author>>> Get(Guid authorId)
 		{
-			return Ok(await this.authorService.Get(authorId));
+			var response = await this.authorService.Get(authorId);
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+			
+			return Ok(response);
 		}
 
 		/// <summary>
@@ -74,12 +92,13 @@ namespace testeLeadSoft.Controllers
 		[HttpDelete("{authorId}")]
 		public async Task<ActionResult<ServiceResponse<List<Author>>>> DeleteAuthor(Guid authorId)
 		{
-			//if(await this.authorService.DeleteAuthor(authorId) == null)
-			//{
-			//	return BadRequest("Author not found.");
-			//}
-
-			return Ok(await this.authorService.DeleteAuthor(authorId));
+			var response = await this.authorService.DeleteAuthor(authorId);
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+			
+			return Ok(response);
 		}
 	}
 }
