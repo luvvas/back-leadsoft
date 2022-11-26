@@ -114,27 +114,39 @@ namespace testeLeadSoft.Services.ArticleService
 
 		public async Task<ServiceResponse<List<Article>>> UpdateArticle(CreateArticleDto request)
 		{
-			var dbAuthor = await this.context.Authors.FindAsync(request.AuthorId);
-			if (dbAuthor == null)
+			var serviceResponse = new ServiceResponse<List<Article>>();
+
+			try
 			{
-				// BadRequest("Author not found.")
-				return null;
+				var dbAuthor = await this.context.Authors.FindAsync(request.AuthorId);
+				if(dbAuthor != null)
+				{
+					if(dbArticle != null)
+					{
+						dbArticle.Title = request.Title;
+						dbArticle.Description = request.Description;
+						dbArticle.Text = request.Text;
+
+						await this.context.SaveChangesAsync();
+
+						serviceResponse.Data = await this.context.Articles.ToListAsync();
+					} else
+					{
+						serviceResponse.Success = false;
+						serviceResponse.Message = "Article not found";
+					}
+				} else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "Author not found";
+				}
+			} catch (Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
 			}
 
-			var dbArticle = await this.context.Articles.FindAsync(request.Id);
-			if (dbArticle == null)
-			{
-				// BadRequest("Article not found.")
-				return null;
-			}
-
-			dbArticle.Title = request.Title;
-			dbArticle.Description = request.Description;
-			dbArticle.Text = request.Text;
-
-			await this.context.SaveChangesAsync();
-
-			return await this.context.Articles.ToListAsync();
+			return serviceResponse;
 		}
 	}
 }
