@@ -6,9 +6,9 @@ namespace testeLeadSoft.Services.CategoryService
 {
 	public interface ICategoryService
 	{
-		Task<List<Category>> Get();
-		Task<List<Category>> AddCategory(CreateCategoryDto request);
-		Task<List<Category>> UpdateCategory(CreateCategoryDto request);
-		Task<List<Category>> DeleteCategory(Guid categoryId);
+		Task<ServiceResponse<List<Category>>> Get();
+		Task<ServiceResponse<List<Category>>> AddCategory(CreateCategoryDto request);
+		Task<ServiceResponse<List<Category>>> UpdateCategory(CreateCategoryDto request);
+		Task<ServiceResponse<List<Category>>> DeleteCategory(Guid categoryId);
 	}
 }

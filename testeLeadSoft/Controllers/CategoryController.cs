@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using testeLeadSoft.Data;
 using testeLeadSoft.Dto;
 using testeLeadSoft.Models;
+using testeLeadSoft.Services.AuthorService;
 using testeLeadSoft.Services.CategoryService;
 
 namespace testeLeadSoft.Controllers
@@ -22,9 +23,15 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult<List<Category>>> Get()
+		public async Task<ActionResult<ServiceResponse<List<Category>>>> Get()
 		{
-			return Ok(await this.categoryService.Get());
+			var response = await categoryService.Get();
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
 		}
 
 		/// <summary>
@@ -33,9 +40,15 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<List<Category>>> AddCategory(CreateCategoryDto request)
+		public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCategory(CreateCategoryDto request)
 		{
-			return Ok(await this.categoryService.AddCategory(request));
+			var response = await this.categoryService.AddCategory(request);
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
 		}
 
 		/// <summary>
@@ -44,9 +57,15 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<List<Author>>> UpdateCategory(CreateCategoryDto request)
+		public async Task<ActionResult<ServiceResponse<List<Author>>>> UpdateCategory(CreateCategoryDto request)
 		{
-			return Ok(await this.categoryService.UpdateCategory(request));
+			var response = await this.categoryService.UpdateCategory(request);
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
 		}
 
 		/// <summary>
@@ -55,9 +74,15 @@ namespace testeLeadSoft.Controllers
 		/// <param name="categoryId"></param>
 		/// <returns></returns>
 		[HttpDelete("{categoryId}")]
-		public async Task<ActionResult<List<Category>>> DeleteCategory(Guid categoryId)
+		public async Task<ActionResult<ServiceResponse<List<Category>>>> DeleteCategory(Guid categoryId)
 		{
-			return Ok(await this.categoryService.DeleteCategory(categoryId));
+			var response = await this.categoryService.DeleteCategory(categoryId);
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
 		}
 
 	}
