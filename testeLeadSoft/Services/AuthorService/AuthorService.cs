@@ -56,7 +56,15 @@ namespace testeLeadSoft.Services.AuthorService
 		public async Task<ServiceResponse<List<Author>>> Get()
 		{
 			var serviceResponse = new ServiceResponse<List<Author>>();
-			serviceResponse.Data = await this.context.Authors.ToListAsync();
+
+			try
+			{
+				serviceResponse.Data = await this.context.Authors.ToListAsync();
+			} catch(Exception ex)
+			{
+				serviceResponse.Success = false;
+				serviceResponse.Message = ex.Message;
+			}
 
 			return serviceResponse;
 		}
@@ -110,6 +118,7 @@ namespace testeLeadSoft.Services.AuthorService
 				serviceResponse.Success = false;
 				serviceResponse.Message = ex.Message;
 			}
+
 			return serviceResponse;
 		}
 	}
