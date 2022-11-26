@@ -22,9 +22,15 @@ namespace testeLeadSoft.Controllers
 		/// <param name="authorId"></param>
 		/// <returns></returns>
 		[HttpGet("{authorId}")]
-		public async Task<ActionResult<List<Article>>> Get(Guid authorId)
+		public async Task<ActionResult<ServiceResponse<List<Article>>>> Get(Guid authorId)
 		{
-			return Ok(await this.articleService.Get(authorId));
+			var response = await this.articleService.Get(authorId);
+			if(response.Data == null)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
 		}
 
 		/// <summary>
@@ -33,9 +39,15 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<List<Article>>> AddArticle(CreateArticleDto request)
+		public async Task<ActionResult<ServiceResponse<List<Article>>>> AddArticle(CreateArticleDto request)
 		{
-			return Ok(await this.articleService.AddArticle(request));
+			var response = await this.articleService.AddArticle(request);
+			if (response.Data == null)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
 		}
 
 		/// <summary>
@@ -44,9 +56,15 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<List<Article>>> UpdateArticle(CreateArticleDto request)
+		public async Task<ActionResult<ServiceResponse<List<Article>>>> UpdateArticle(CreateArticleDto request)
 		{
-			return Ok(await this.articleService.UpdateArticle(request));
+			var response = await this.articleService.UpdateArticle(request);
+			if (response.Data == null)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
 		}
 
 		/// <summary>
@@ -55,9 +73,15 @@ namespace testeLeadSoft.Controllers
 		/// <param name="articleId"></param>
 		/// <returns></returns>
 		[HttpDelete("{articleId}")]
-		public async Task<ActionResult<List<Article>>> DeleteArticle(Guid articleId)
+		public async Task<ActionResult<ServiceResponse<List<Article>>>> DeleteArticle(Guid articleId)
 		{
-			return Ok(await this.articleService.DeleteArticle(articleId));
+			var response = await this.articleService.DeleteArticle(articleId);
+			if (response.Data == null)
+			{
+				return NotFound(response);
+			}
+
+			return Ok(response);
 		}
 	}
 }

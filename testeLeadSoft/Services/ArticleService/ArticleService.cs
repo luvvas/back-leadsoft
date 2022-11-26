@@ -91,11 +91,11 @@ namespace testeLeadSoft.Services.ArticleService
 
 			try
 			{
-				var articles = await this.context.Articles
+				var article = await this.context.Articles
 				.Where(a => a.AuthorId == authorId)
 				.ToListAsync();
 
-				if (articles != null)
+				if (article != null)
 				{
 					serviceResponse.Data = article;
 				} else
@@ -121,6 +121,7 @@ namespace testeLeadSoft.Services.ArticleService
 				var dbAuthor = await this.context.Authors.FindAsync(request.AuthorId);
 				if(dbAuthor != null)
 				{
+					var dbArticle = await this.context.Articles.FindAsync(request.Id);
 					if(dbArticle != null)
 					{
 						dbArticle.Title = request.Title;
