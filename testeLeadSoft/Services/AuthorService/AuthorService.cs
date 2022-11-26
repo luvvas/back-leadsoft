@@ -16,8 +16,10 @@ namespace testeLeadSoft.Services.AuthorService
 			this.context = context;
 		}
 
-		public async Task<List<Author>> AddAuthor(CreateAuthorDto request)
+		public async Task<ServiceResponse<List<Author>>> AddAuthor(CreateAuthorDto request)
 		{
+			var serviceResponse = new ServiceResponse<List<Author>>();
+
 			var newAuthor = new Author
 			{
 				FirstName = request.FirstName,
@@ -28,11 +30,15 @@ namespace testeLeadSoft.Services.AuthorService
 			this.context.Authors.Add(newAuthor);
 			await this.context.SaveChangesAsync();
 
-			return await this.context.Authors.ToListAsync();
+			serviceResponse.Data = await this.context.Authors.ToListAsync();
+
+			return serviceResponse;
 		}
 
-		public async Task<List<Author>> DeleteAuthor(Guid authorId)
+		public async Task<ServiceResponse<List<Author>>> DeleteAuthor(Guid authorId)
 		{
+			var serviceResponse = new ServiceResponse<List<Author>>();
+
 			var dbAuthor = await this.context.Authors.FindAsync(authorId);
 			if (dbAuthor == null)
 			{
@@ -43,16 +49,23 @@ namespace testeLeadSoft.Services.AuthorService
 			this.context.Authors.Remove(dbAuthor);
 			await this.context.SaveChangesAsync();
 
-			return await this.context.Authors.ToListAsync();
+			serviceResponse.Data = await this.context.Authors.ToListAsync();
+
+			return serviceResponse;
 		}
 
-		public async Task<List<Author>> Get()
+		public async Task<ServiceResponse<List<Author>>> Get()
 		{
-			return await this.context.Authors.ToListAsync();
+			var serviceResponse = new ServiceResponse<List<Author>>();
+			serviceResponse.Data = await this.context.Authors.ToListAsync();
+
+			return serviceResponse;
 		}
 
-		public async Task<Author> Get(Guid authorId)
+		public async Task<ServiceResponse<Author>> Get(Guid authorId)
 		{
+			var serviceResponse = new ServiceResponse<Author>();
+
 			var author = await this.context.Authors.FindAsync(authorId);
 			if (author == null)
 			{
@@ -60,11 +73,15 @@ namespace testeLeadSoft.Services.AuthorService
 				return null;
 			}
 
-			return author;
+			serviceResponse.Data = author;
+
+			return serviceResponse;
 		}
 
-		public async Task<List<Author>> UpdateAuthor(CreateAuthorDto request)
+		public async Task<ServiceResponse<List<Author>>> UpdateAuthor(CreateAuthorDto request)
 		{
+			var serviceResponse = new ServiceResponse<List<Author>>();
+
 			var dbAuthor = await this.context.Authors.FindAsync(request.Id);
 			if (dbAuthor == null)
 			{
@@ -78,7 +95,9 @@ namespace testeLeadSoft.Services.AuthorService
 
 			await this.context.SaveChangesAsync();
 
-			return await this.context.Authors.ToListAsync();
+			serviceResponse.Data = await this.context.Authors.ToListAsync();
+
+			return serviceResponse;
 		}
 	}
 }

@@ -22,7 +22,7 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult<List<Author>>> Get()
+		public async Task<ActionResult<ServiceResponse<List<Author>>>> Get()
 		{
 			return Ok(await this.authorService.Get());
 		}
@@ -33,7 +33,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<List<Author>>> AddAuthor(CreateAuthorDto request)
+		public async Task<ActionResult<ServiceResponse<List<Author>>>> AddAuthor(CreateAuthorDto request)
 		{
 			return Ok(await this.authorService.AddAuthor(request));
 		}
@@ -44,7 +44,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="authorId"></param>
 		/// <returns></returns>
 		[HttpGet("{authorId}")]
-		public async Task<ActionResult<Author>> Get(Guid authorId)
+		public async Task<ActionResult<ServiceResponse<Author>>> Get(Guid authorId)
 		{
 			return Ok(await this.authorService.Get(authorId));
 		}
@@ -55,7 +55,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<List<Author>>> UpdateAuthor(CreateAuthorDto request)
+		public async Task<ActionResult<ServiceResponse<List<Author>>>> UpdateAuthor(CreateAuthorDto request)
 		{
 			return Ok(await this.authorService.UpdateAuthor(request));
 		}
@@ -66,7 +66,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="authorId"></param>
 		/// <returns></returns>
 		[HttpDelete("{authorId}")]
-		public async Task<ActionResult<List<Author>>> DeleteAuthor(Guid authorId)
+		public async Task<ActionResult<ServiceResponse<List<Author>>>> DeleteAuthor(Guid authorId)
 		{
 			//if(await this.authorService.DeleteAuthor(authorId) == null)
 			//{
