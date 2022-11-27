@@ -99,6 +99,33 @@
             <param name="categoryId"></param>
             <returns></returns>
         </member>
+        <member name="M:testeLeadSoft.Controllers.CommentController.Get">
+            <summary>
+            Get all comments on Database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.CommentController.AddComment(testeLeadSoft.Dto.CreateCommentDto)">
+            <summary>
+            Include a comment on Database
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.CommentController.UpdateComment(testeLeadSoft.Dto.CreateCommentDto)">
+            <summary>
+            Update a comment on Database
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:testeLeadSoft.Controllers.CommentController.DeleteComment(System.Guid)">
+            <summary>
+            Delete a comment on Database
+            </summary>
+            <param name="commentId"></param>
+            <returns></returns>
+        </member>
         <member name="T:testeLeadSoft.Migrations.CreateAuthor">
             <inheritdoc />
         </member>

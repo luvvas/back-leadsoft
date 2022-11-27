@@ -59,7 +59,7 @@ namespace testeLeadSoft.Services.AuthorService
 					serviceResponse.Success = false;
 					serviceResponse.Message = "Author not found.";
 				}
-			} catch( Exception ex ) 
+			} catch(Exception ex) 
 			{ 
 				serviceResponse.Success = false;
 				serviceResponse.Message = ex.Message;

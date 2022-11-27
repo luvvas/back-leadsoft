@@ -24,7 +24,7 @@ namespace testeLeadSoft.Controllers
 		[HttpGet]
 		public async Task<ActionResult<ServiceResponse<List<Author>>>> Get()
 		{
-			var response = await authorService.Get();
+			var response = await this.authorService.Get();
 			if(response.Data == null)
 			{
 				return NotFound(response);

@@ -5,6 +5,7 @@ using testeLeadSoft.Data;
 using testeLeadSoft.Services.ArticleService;
 using testeLeadSoft.Services.AuthorService;
 using testeLeadSoft.Services.CategoryService;
+using testeLeadSoft.Services.CommentService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddSwaggerGen(s =>
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddEntityFrameworkNpgsql()
 	.AddDbContext<DataContext>(options =>
