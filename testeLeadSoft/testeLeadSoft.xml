@@ -44,7 +44,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.AuthorController.AddAuthor(testeLeadSoft.Dto.CreateAuthorDto)">
+        <member name="M:testeLeadSoft.Controllers.AuthorController.AddAuthor(testeLeadSoft.Dto.Author.CreateAuthorDto)">
             <summary>
             Include a Author on Database
             </summary>
@@ -58,7 +58,7 @@
             <param name="authorId"></param>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.AuthorController.UpdateAuthor(testeLeadSoft.Dto.CreateAuthorDto)">
+        <member name="M:testeLeadSoft.Controllers.AuthorController.UpdateAuthor(testeLeadSoft.Dto.Author.GetAuthorDto)">
             <summary>
             Update a author on Database
             </summary>

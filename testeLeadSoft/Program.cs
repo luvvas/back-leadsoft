@@ -32,6 +32,9 @@ builder.Services.AddSwaggerGen(s =>
 	s.IncludeXmlComments(xmlPath);
 });
 
+// Para adicionar o autoMapper (depois de instalar a dependencia)
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();

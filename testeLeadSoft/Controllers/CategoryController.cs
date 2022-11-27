@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using testeLeadSoft.Data;
+
 using testeLeadSoft.Dto;
 using testeLeadSoft.Models;
 using testeLeadSoft.Services.AuthorService;
@@ -40,9 +39,9 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCategory(CreateCategoryDto request)
+		public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCategory([FromBody]CreateCategoryDto request)
 		{
-			var response = await this.categoryService.AddCategory(request);
+			var response = await categoryService.AddCategory(request);
 			if(response.Data == null)
 			{
 				return NotFound(response);
@@ -57,9 +56,9 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<ServiceResponse<List<Author>>>> UpdateCategory(CreateCategoryDto request)
+		public async Task<ActionResult<ServiceResponse<List<Author>>>> UpdateCategory([FromBody]CreateCategoryDto request)
 		{
-			var response = await this.categoryService.UpdateCategory(request);
+			var response = await categoryService.UpdateCategory(request);
 			if(response.Data == null)
 			{
 				return NotFound(response);
@@ -73,10 +72,10 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <param name="categoryId"></param>
 		/// <returns></returns>
-		[HttpDelete("{categoryId}")]
-		public async Task<ActionResult<ServiceResponse<List<Category>>>> DeleteCategory(Guid categoryId)
+		[HttpDelete("{categoryId:guid}")]
+		public async Task<ActionResult<ServiceResponse<List<Category>>>> DeleteCategory([FromRoute]Guid categoryId)
 		{
-			var response = await this.categoryService.DeleteCategory(categoryId);
+			var response = await categoryService.DeleteCategory(categoryId);
 			if(response.Data == null)
 			{
 				return NotFound(response);

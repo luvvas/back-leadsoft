@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Author;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.AuthorService
 {
-	public interface IAuthorService
-	{
-		Task<ServiceResponse<List<Author>>> Get();
-		Task<ServiceResponse<List<Author>>> AddAuthor(CreateAuthorDto request);
-		Task<ServiceResponse<Author>> Get(Guid authorId);
-		Task<ServiceResponse<List<Author>>> UpdateAuthor(CreateAuthorDto request);
-		Task<ServiceResponse<List<Author>>> DeleteAuthor(Guid authorId);
-	}
+    public interface IAuthorService
+		{
+			Task<ServiceResponse<List<GetAuthorDto>>> Get();
+			Task<ServiceResponse<List<GetAuthorDto>>> AddAuthor(CreateAuthorDto request);
+			Task<ServiceResponse<GetAuthorDto>> Get(Guid authorId);
+			Task<ServiceResponse<GetAuthorDto>> UpdateAuthor(GetAuthorDto request);
+			Task<ServiceResponse<List<GetAuthorDto>>> DeleteAuthor(Guid authorId);
+		}
 }

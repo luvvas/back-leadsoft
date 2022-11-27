@@ -25,10 +25,10 @@ namespace testeLeadSoft.Services.CategoryService
 					Type = request.Type
 				};
 
-				this.context.Categories.Add(newCategory);
-				await this.context.SaveChangesAsync();
+				context.Categories.Add(newCategory);
+				await context.SaveChangesAsync();
 
-				serviceResponse.Data = await this.context.Categories.ToListAsync();
+				serviceResponse.Data = await context.Categories.ToListAsync();
 			} catch(Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -44,13 +44,13 @@ namespace testeLeadSoft.Services.CategoryService
 
 			try
 			{
-				var dbCategory = await this.context.Categories.FindAsync(categoryId);
+				var dbCategory = await context.Categories.FindAsync(categoryId);
 				if (dbCategory != null)
 				{
-					this.context.Categories.Remove(dbCategory);
-					await this.context.SaveChangesAsync();
+					context.Categories.Remove(dbCategory);
+					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await this.context.Categories.ToListAsync();
+					serviceResponse.Data = await context.Categories.ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;
@@ -71,7 +71,7 @@ namespace testeLeadSoft.Services.CategoryService
 
 			try
 			{
-				serviceResponse.Data = await this.context.Categories.ToListAsync();
+				serviceResponse.Data = await context.Categories.ToListAsync();
 			} catch (Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -87,15 +87,15 @@ namespace testeLeadSoft.Services.CategoryService
 
 			try
 			{
-				var dbCategory = await this.context.Categories.FindAsync(request.Id);
+				var dbCategory = await context.Categories.FindAsync(request.Id);
 				if (dbCategory != null)
 				{
 					dbCategory.Name = request.Name;
 					dbCategory.Type = request.Type;
 
-					await this.context.SaveChangesAsync();
+					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await this.context.Categories.ToListAsync();
+					serviceResponse.Data = await context.Categories.ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;

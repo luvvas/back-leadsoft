@@ -1,23 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 using testeLeadSoft.Data;
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Author;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.AuthorService
 {
-	public class AuthorService : IAuthorService
+    public class AuthorService : IAuthorService
 	{
 		private readonly DataContext context;
+		private readonly IMapper mapper;
 
-		public AuthorService(DataContext context) 
+		public AuthorService(DataContext context, IMapper mapper) 
 		{
 			this.context = context;
+			this.mapper = mapper;
 		}
 
-		public async Task<ServiceResponse<List<Author>>> AddAuthor(CreateAuthorDto request)
+		public async Task<ServiceResponse<List<GetAuthorDto>>> AddAuthor(CreateAuthorDto request)
 		{
-			var serviceResponse = new ServiceResponse<List<Author>>();
+			var serviceResponse = new ServiceResponse<List<GetAuthorDto>>();
 
 			try 
 			{
@@ -28,10 +31,10 @@ namespace testeLeadSoft.Services.AuthorService
 					Age = request.Age
 				};
 
-				this.context.Authors.Add(newAuthor);
-				await this.context.SaveChangesAsync();
+				context.Authors.Add(mapper.Map<Author>(newAuthor));
+				await context.SaveChangesAsync();
 
-				serviceResponse.Data = await this.context.Authors.ToListAsync();
+				serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
 			} catch (Exception ex) 
 			{
 				serviceResponse.Success = false;
@@ -41,19 +44,19 @@ namespace testeLeadSoft.Services.AuthorService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Author>>> DeleteAuthor(Guid authorId)
+		public async Task<ServiceResponse<List<GetAuthorDto>>> DeleteAuthor(Guid authorId)
 		{
-			var serviceResponse = new ServiceResponse<List<Author>>();
+			var serviceResponse = new ServiceResponse<List<GetAuthorDto>>();
 
 			try
 			{
-				var dbAuthor = await this.context.Authors.FindAsync(authorId);
+				var dbAuthor = await context.Authors.FindAsync(authorId);
 				if (dbAuthor != null)
 				{
-					this.context.Authors.Remove(dbAuthor);
-					await this.context.SaveChangesAsync();
+					context.Authors.Remove(dbAuthor);
+					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await this.context.Authors.ToListAsync();
+					serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;
@@ -68,13 +71,14 @@ namespace testeLeadSoft.Services.AuthorService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Author>>> Get()
+		public async Task<ServiceResponse<List<GetAuthorDto>>> Get()
 		{
-			var serviceResponse = new ServiceResponse<List<Author>>();
+			var serviceResponse = new ServiceResponse<List<GetAuthorDto>>();
 
 			try
 			{
-				serviceResponse.Data = await this.context.Authors.ToListAsync();
+				var authors = await context.Authors.ToListAsync();
+				serviceResponse.Data = authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToList();
 			} catch(Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -84,16 +88,16 @@ namespace testeLeadSoft.Services.AuthorService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<Author>> Get(Guid authorId)
+		public async Task<ServiceResponse<GetAuthorDto>> Get(Guid authorId)
 		{
-			var serviceResponse = new ServiceResponse<Author>();
+			var serviceResponse = new ServiceResponse<GetAuthorDto>();
 
 			try
 			{
-				var author = await this.context.Authors.FindAsync(authorId);
+				var author = await context.Authors.FindAsync(authorId);
 				if (author != null)
 				{
-					serviceResponse.Data = author;
+					serviceResponse.Data = mapper.Map<GetAuthorDto>(author);
 				} else
 				{
 					serviceResponse.Success = false;
@@ -108,22 +112,22 @@ namespace testeLeadSoft.Services.AuthorService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Author>>> UpdateAuthor(CreateAuthorDto request)
+		public async Task<ServiceResponse<GetAuthorDto>> UpdateAuthor(GetAuthorDto request)
 		{
-			var serviceResponse = new ServiceResponse<List<Author>>();
+			var serviceResponse = new ServiceResponse<GetAuthorDto>();
 
 			try
 			{
-				var dbAuthor = await this.context.Authors.FindAsync(request.Id);
+				var dbAuthor = await context.Authors.FindAsync(request.Id);
 				if (dbAuthor != null)
 				{
 					dbAuthor.FirstName = request.FirstName;
 					dbAuthor.LastName = request.LastName;
 					dbAuthor.Age = request.Age;
 
-					await this.context.SaveChangesAsync();
+					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await this.context.Authors.ToListAsync();
+					serviceResponse.Data = mapper.Map<GetAuthorDto>(dbAuthor);
 				} else {
 					serviceResponse.Success = false;
 					serviceResponse.Message = "Author not found.";

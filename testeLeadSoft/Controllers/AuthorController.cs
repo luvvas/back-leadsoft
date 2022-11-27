@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Author;
 using testeLeadSoft.Models;
 using testeLeadSoft.Services.AuthorService;
 
 namespace testeLeadSoft.Controllers
 {
-	[Route("api/[controller]")]
+  [Route("api/[controller]")]
 	[ApiController]
 	public class AuthorController : ControllerBase
 	{
@@ -22,9 +22,9 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<List<Author>>>> Get()
+		public async Task<ActionResult<ServiceResponse<List<GetAuthorDto>>>> Get()
 		{
-			var response = await this.authorService.Get();
+			var response = await authorService.Get();
 			if(response.Data == null)
 			{
 				return NotFound(response);
@@ -39,9 +39,9 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<ServiceResponse<List<Author>>>> AddAuthor(CreateAuthorDto request)
+		public async Task<ActionResult<ServiceResponse<List<GetAuthorDto>>>> AddAuthor([FromBody]CreateAuthorDto request)
 		{
-			var response = await this.authorService.AddAuthor(request);
+			var response = await authorService.AddAuthor(request);
 			if(response.Data == null)
 			{
 				return NotFound(response);
@@ -55,10 +55,10 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <param name="authorId"></param>
 		/// <returns></returns>
-		[HttpGet("{authorId}")]
-		public async Task<ActionResult<ServiceResponse<Author>>> Get(Guid authorId)
+		[HttpGet("{authorId:guid}")]
+		public async Task<ActionResult<ServiceResponse<GetAuthorDto>>> Get([FromRoute]Guid authorId)
 		{
-			var response = await this.authorService.Get(authorId);
+			var response = await authorService.Get(authorId);
 			if(response.Data == null)
 			{
 				return NotFound(response);
@@ -73,9 +73,9 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<ServiceResponse<List<Author>>>> UpdateAuthor(CreateAuthorDto request)
+		public async Task<ActionResult<ServiceResponse<List<GetAuthorDto>>>> UpdateAuthor([FromBody]GetAuthorDto request)
 		{
-			var response = await this.authorService.UpdateAuthor(request);
+			var response = await authorService.UpdateAuthor(request);
 			if(response.Data == null)
 			{
 				return NotFound(response);
@@ -89,10 +89,10 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <param name="authorId"></param>
 		/// <returns></returns>
-		[HttpDelete("{authorId}")]
-		public async Task<ActionResult<ServiceResponse<List<Author>>>> DeleteAuthor(Guid authorId)
+		[HttpDelete("{authorId:guid}")]
+		public async Task<ActionResult<ServiceResponse<List<GetAuthorDto>>>> DeleteAuthor([FromRoute]Guid authorId)
 		{
-			var response = await this.authorService.DeleteAuthor(authorId);
+			var response = await authorService.DeleteAuthor(authorId);
 			if(response.Data == null)
 			{
 				return NotFound(response);

@@ -12,7 +12,7 @@ namespace testeLeadSoft.Controllers
 	{
 		private readonly ICommentService commentService;
 
-		public CommentController(ICommentService commentService) 
+		public CommentController(ICommentService commentService)
 		{
 			this.commentService = commentService;
 		}
@@ -24,8 +24,8 @@ namespace testeLeadSoft.Controllers
 		[HttpGet]
 		public async Task<ActionResult<ServiceResponse<List<Comment>>>> Get()
 		{
-			var response = await this.commentService.Get();
-			if(response.Data == null)
+			var response = await commentService.Get();
+			if (response.Data == null)
 			{
 				return NotFound(response);
 			}
@@ -38,9 +38,9 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<ServiceResponse<List<Comment>>>> AddComment(CreateCommentDto request)
+		public async Task<ActionResult<ServiceResponse<List<Comment>>>> AddComment([FromBody]CreateCommentDto request)
 		{
-			var response = await this.commentService.AddComment(request);
+			var response = await commentService.AddComment(request);
 			if (response.Data == null)
 			{
 				return NotFound(response);
@@ -54,9 +54,9 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<ServiceResponse<List<Comment>>>> UpdateComment(CreateCommentDto request)
+		public async Task<ActionResult<ServiceResponse<List<Comment>>>> UpdateComment([FromBody]CreateCommentDto request)
 		{
-			var response = await this.commentService.UpdateComment(request);
+			var response = await commentService.UpdateComment(request);
 			if (response.Data == null)
 			{
 				return NotFound(response);
@@ -69,10 +69,10 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <param name="commentId"></param>
 		/// <returns></returns>
-		[HttpDelete]
-		public async Task<ActionResult<ServiceResponse<List<Comment>>>> DeleteComment(Guid commentId)
+		[HttpDelete("{commentId:guid}")]
+		public async Task<ActionResult<ServiceResponse<List<Comment>>>> DeleteComment([FromRoute]Guid commentId)
 		{
-			var response = await this.commentService.DeleteComment(commentId);
+			var response = await commentService.DeleteComment(commentId);
 			if (response.Data == null)
 			{
 				return NotFound(response);

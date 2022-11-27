@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+
 using testeLeadSoft.Data;
 using testeLeadSoft.Dto;
 using testeLeadSoft.Models;
@@ -21,7 +21,7 @@ namespace testeLeadSoft.Services.CommentService
 
 			try
 			{
-				serviceResponse.Data = await this.context.Comments.ToListAsync();
+				serviceResponse.Data = await context.Comments.ToListAsync();
 			} catch (Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -37,7 +37,7 @@ namespace testeLeadSoft.Services.CommentService
 
 			try
 			{
-				var article = await this.context.Articles.FindAsync(request.ArticleId);
+				var article = await context.Articles.FindAsync(request.ArticleId);
 
 				if(article != null) 
 				{
@@ -47,10 +47,10 @@ namespace testeLeadSoft.Services.CommentService
 						Article = article
 					};
 
-					this.context.Comments.Add(newComment);
-					await this.context.SaveChangesAsync();
+					context.Comments.Add(newComment);
+					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await this.context.Comments.ToListAsync();
+					serviceResponse.Data = await context.Comments.ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;
@@ -71,14 +71,14 @@ namespace testeLeadSoft.Services.CommentService
 
 			try 
 			{
-				var dbComment = await this.context.Comments.FindAsync(request.Id);
+				var dbComment = await context.Comments.FindAsync(request.Id);
 				if(dbComment != null)
 				{
 					dbComment.Text = request.Text;
 
-					await this.context.SaveChangesAsync();
+					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await this.context.Comments.ToListAsync();
+					serviceResponse.Data = await context.Comments.ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;
@@ -100,13 +100,13 @@ namespace testeLeadSoft.Services.CommentService
 
 			try
 			{
-				var dbComment = await this.context.Comments.FindAsync(commentId);
+				var dbComment = await context.Comments.FindAsync(commentId);
 				if (dbComment != null)
 				{
-					this.context.Comments.Remove(dbComment);
-					await this.context.SaveChangesAsync();
+					context.Comments.Remove(dbComment);
+					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await this.context.Comments.ToListAsync();
+					serviceResponse.Data = await context.Comments.ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;

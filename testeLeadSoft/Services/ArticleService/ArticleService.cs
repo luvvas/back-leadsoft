@@ -19,11 +19,11 @@ namespace testeLeadSoft.Services.ArticleService
 
 			try
 			{
-				var author = await this.context.Authors.FindAsync(request.AuthorId);
+				var author = await context.Authors.FindAsync(request.AuthorId);
 
 				if (author != null)
 				{
-					var category = await this.context.Categories.FindAsync(request.CategoryId);
+					var category = await context.Categories.FindAsync(request.CategoryId);
 					if (category != null)
 					{
 						var newArticle = new Article
@@ -35,10 +35,10 @@ namespace testeLeadSoft.Services.ArticleService
 							Category = category
 						};
 
-						this.context.Articles.Add(newArticle);
-						await this.context.SaveChangesAsync();
+						context.Articles.Add(newArticle);
+						await context.SaveChangesAsync();
 
-						serviceResponse.Data = await this.context.Articles.ToListAsync();
+						serviceResponse.Data = await context.Articles.ToListAsync();
 					} else
 					{
 						serviceResponse.Success = false;
@@ -64,13 +64,13 @@ namespace testeLeadSoft.Services.ArticleService
 
 			try
 			{
-				var dbArticle = await this.context.Articles.FindAsync(articleId);
+				var dbArticle = await context.Articles.FindAsync(articleId);
 				if (dbArticle != null)
 				{
-					this.context.Articles.Remove(dbArticle);
-					await this.context.SaveChangesAsync();
+					context.Articles.Remove(dbArticle);
+					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await this.context.Articles.ToListAsync();
+					serviceResponse.Data = await context.Articles.ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;
@@ -90,7 +90,7 @@ namespace testeLeadSoft.Services.ArticleService
 
 			try
 			{
-				serviceResponse.Data = await this.context.Articles.ToListAsync();
+				serviceResponse.Data = await context.Articles.ToListAsync();
 			} catch(Exception ex) 
 			{ 
 				serviceResponse.Success = false;
@@ -100,15 +100,13 @@ namespace testeLeadSoft.Services.ArticleService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Article>>> Get(Guid authorId)
+		public async Task<ServiceResponse<Article>> Get(Guid articleId)
 		{
-			var serviceResponse = new ServiceResponse<List<Article>>();
+			var serviceResponse = new ServiceResponse<Article>();
 
 			try
 			{
-				var article = await this.context.Articles
-				.Where(a => a.AuthorId == authorId)
-				.ToListAsync();
+				var article = await context.Articles.FindAsync(articleId);
 
 				if (article != null)
 				{
@@ -133,16 +131,16 @@ namespace testeLeadSoft.Services.ArticleService
 
 			try
 			{
-				var dbArticle = await this.context.Articles.FindAsync(request.Id);
+				var dbArticle = await context.Articles.FindAsync(request.Id);
 				if(dbArticle != null)
 				{
 					dbArticle.Title = request.Title;
 					dbArticle.Description = request.Description;
 					dbArticle.Text = request.Text;
 
-					await this.context.SaveChangesAsync();
+					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await this.context.Articles.ToListAsync();
+					serviceResponse.Data = await context.Articles.ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;

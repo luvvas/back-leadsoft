@@ -37,10 +37,10 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <param name="authorId"></param>
 		/// <returns></returns>
-		[HttpGet("{authorId}")]
-		public async Task<ActionResult<ServiceResponse<List<Article>>>> Get(Guid authorId)
+		[HttpGet("{articleId:guid}")]
+		public async Task<ActionResult<ServiceResponse<Article>>> Get([FromRoute]Guid articleId)
 		{
-			var response = await this.articleService.Get(authorId);
+			var response = await articleService.Get(articleId);
 			if(response.Data == null)
 			{
 				return NotFound(response);
@@ -55,9 +55,9 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<ServiceResponse<List<Article>>>> AddArticle(CreateArticleDto request)
+		public async Task<ActionResult<ServiceResponse<List<Article>>>> AddArticle([FromBody]CreateArticleDto request)
 		{
-			var response = await this.articleService.AddArticle(request);
+			var response = await articleService.AddArticle(request);
 			if (response.Data == null)
 			{
 				return NotFound(response);
@@ -72,9 +72,9 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<ServiceResponse<List<Article>>>> UpdateArticle(CreateArticleDto request)
+		public async Task<ActionResult<ServiceResponse<List<Article>>>> UpdateArticle([FromBody]CreateArticleDto request)
 		{
-			var response = await this.articleService.UpdateArticle(request);
+			var response = await articleService.UpdateArticle(request);
 			if (response.Data == null)
 			{
 				return NotFound(response);
@@ -88,10 +88,10 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <param name="articleId"></param>
 		/// <returns></returns>
-		[HttpDelete("{articleId}")]
-		public async Task<ActionResult<ServiceResponse<List<Article>>>> DeleteArticle(Guid articleId)
+		[HttpDelete("{articleId:guid}")]
+		public async Task<ActionResult<ServiceResponse<List<Article>>>> DeleteArticle([FromRoute]Guid articleId)
 		{
-			var response = await this.articleService.DeleteArticle(articleId);
+			var response = await articleService.DeleteArticle(articleId);
 			if (response.Data == null)
 			{
 				return NotFound(response);
