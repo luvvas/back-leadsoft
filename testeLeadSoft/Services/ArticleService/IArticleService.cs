@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Article;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.ArticleService
 {
-	public interface IArticleService
+    public interface IArticleService
 	{
-		Task<ServiceResponse<List<Article>>> Get();
-		Task<ServiceResponse<Article>> Get(Guid authorId);
-		Task<ServiceResponse<List<Article>>> AddArticle(CreateArticleDto request);
-		Task<ServiceResponse<List<Article>>> UpdateArticle(CreateArticleDto request);
-		Task<ServiceResponse<List<Article>>> DeleteArticle(Guid articleId);
+		Task<ServiceResponse<List<GetArticleDto>>> Get();
+		Task<ServiceResponse<GetArticleDto>> Get(Guid authorId);
+		Task<ServiceResponse<List<GetArticleDto>>> AddArticle(CreateArticleDto request);
+		Task<ServiceResponse<GetArticleDto>> UpdateArticle(UpdateArticleDto request);
+		Task<ServiceResponse<List<GetArticleDto>>> DeleteArticle(Guid articleId);
 	}
 }

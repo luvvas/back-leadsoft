@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Article;
 using testeLeadSoft.Models;
 using testeLeadSoft.Services.ArticleService;
 
 namespace testeLeadSoft.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class ArticleController : ControllerBase
 	{
@@ -21,7 +20,7 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<List<Article>>>> Get()
+		public async Task<ActionResult<ServiceResponse<List<GetArticleDto>>>> Get()
 		{
 			var response = await articleService.Get();
 			if(response.Data == null)
@@ -35,10 +34,10 @@ namespace testeLeadSoft.Controllers
 		/// <summary>
 		/// Get a article by it's id
 		/// </summary>
-		/// <param name="authorId"></param>
+		/// <param name="articleId"></param>
 		/// <returns></returns>
 		[HttpGet("{articleId:guid}")]
-		public async Task<ActionResult<ServiceResponse<Article>>> Get([FromRoute]Guid articleId)
+		public async Task<ActionResult<ServiceResponse<GetArticleDto>>> Get([FromRoute]Guid articleId)
 		{
 			var response = await articleService.Get(articleId);
 			if(response.Data == null)
@@ -55,7 +54,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<ServiceResponse<List<Article>>>> AddArticle([FromBody]CreateArticleDto request)
+		public async Task<ActionResult<ServiceResponse<List<GetArticleDto>>>> AddArticle([FromBody]CreateArticleDto request)
 		{
 			var response = await articleService.AddArticle(request);
 			if (response.Data == null)
@@ -72,7 +71,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<ServiceResponse<List<Article>>>> UpdateArticle([FromBody]CreateArticleDto request)
+		public async Task<ActionResult<ServiceResponse<GetArticleDto>>> UpdateArticle([FromBody]UpdateArticleDto request)
 		{
 			var response = await articleService.UpdateArticle(request);
 			if (response.Data == null)
@@ -89,7 +88,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="articleId"></param>
 		/// <returns></returns>
 		[HttpDelete("{articleId:guid}")]
-		public async Task<ActionResult<ServiceResponse<List<Article>>>> DeleteArticle([FromRoute]Guid articleId)
+		public async Task<ActionResult<ServiceResponse<List<GetArticleDto>>>> DeleteArticle([FromRoute]Guid articleId)
 		{
 			var response = await articleService.DeleteArticle(articleId);
 			if (response.Data == null)

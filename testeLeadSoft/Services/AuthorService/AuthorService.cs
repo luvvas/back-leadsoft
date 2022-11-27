@@ -77,8 +77,7 @@ namespace testeLeadSoft.Services.AuthorService
 
 			try
 			{
-				var authors = await context.Authors.ToListAsync();
-				serviceResponse.Data = authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToList();
+				serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
 			} catch(Exception ex)
 			{
 				serviceResponse.Success = false;

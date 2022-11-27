@@ -1,10 +1,6 @@
-﻿using System.Text.Json.Serialization;
-
-using testeLeadSoft.Models;
-
-namespace testeLeadSoft.Dto
+﻿namespace testeLeadSoft.Dto.Article
 {
-	public class CreateArticleDto
+	public class GetArticleDto
 	{
 		public Guid Id { get; set; }
 		public string Title { get; set; }

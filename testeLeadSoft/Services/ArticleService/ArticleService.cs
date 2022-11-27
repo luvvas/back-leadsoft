@@ -1,21 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using testeLeadSoft.Data;
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Article;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.ArticleService
 {
-	public class ArticleService : IArticleService
+    public class ArticleService : IArticleService
 	{
 		private readonly DataContext context;
-		public ArticleService(DataContext context) 
+		private readonly IMapper mapper;
+		public ArticleService(DataContext context, IMapper mapper) 
 		{
 			this.context = context;
+			this.mapper = mapper;
 		}
 
-		public async Task<ServiceResponse<List<Article>>> AddArticle(CreateArticleDto request)
+		public async Task<ServiceResponse<List<GetArticleDto>>> AddArticle(CreateArticleDto request)
 		{
-			var serviceResponse = new ServiceResponse<List<Article>>();
+			var serviceResponse = new ServiceResponse<List<GetArticleDto>>();
 
 			try
 			{
@@ -35,10 +38,10 @@ namespace testeLeadSoft.Services.ArticleService
 							Category = category
 						};
 
-						context.Articles.Add(newArticle);
+						context.Articles.Add(mapper.Map<Article>(newArticle));
 						await context.SaveChangesAsync();
 
-						serviceResponse.Data = await context.Articles.ToListAsync();
+						serviceResponse.Data = await context.Articles.Select(a => mapper.Map<GetArticleDto>(a)).ToListAsync();
 					} else
 					{
 						serviceResponse.Success = false;
@@ -58,9 +61,9 @@ namespace testeLeadSoft.Services.ArticleService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Article>>> DeleteArticle(Guid articleId)
+		public async Task<ServiceResponse<List<GetArticleDto>>> DeleteArticle(Guid articleId)
 		{
-			var serviceResponse = new ServiceResponse<List<Article>>();
+			var serviceResponse = new ServiceResponse<List<GetArticleDto>>();
 
 			try
 			{
@@ -70,7 +73,7 @@ namespace testeLeadSoft.Services.ArticleService
 					context.Articles.Remove(dbArticle);
 					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await context.Articles.ToListAsync();
+					serviceResponse.Data = await context.Articles.Select(a => mapper.Map<GetArticleDto>(a)).ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;
@@ -85,12 +88,13 @@ namespace testeLeadSoft.Services.ArticleService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Article>>> Get() { 
-			var serviceResponse = new ServiceResponse<List<Article>>();
+		public async Task<ServiceResponse<List<GetArticleDto>>> Get() 
+		{ 
+			var serviceResponse = new ServiceResponse<List<GetArticleDto>>();
 
 			try
 			{
-				serviceResponse.Data = await context.Articles.ToListAsync();
+				serviceResponse.Data = await context.Articles.Select(a => mapper.Map<GetArticleDto>(a)).ToListAsync();
 			} catch(Exception ex) 
 			{ 
 				serviceResponse.Success = false;
@@ -100,17 +104,16 @@ namespace testeLeadSoft.Services.ArticleService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<Article>> Get(Guid articleId)
+		public async Task<ServiceResponse<GetArticleDto>> Get(Guid articleId)
 		{
-			var serviceResponse = new ServiceResponse<Article>();
+			var serviceResponse = new ServiceResponse<GetArticleDto>();
 
 			try
 			{
 				var article = await context.Articles.FindAsync(articleId);
-
 				if (article != null)
 				{
-					serviceResponse.Data = article;
+					serviceResponse.Data = mapper.Map<GetArticleDto>(article);
 				} else
 				{
 					serviceResponse.Success = false;
@@ -125,9 +128,9 @@ namespace testeLeadSoft.Services.ArticleService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Article>>> UpdateArticle(CreateArticleDto request)
+		public async Task<ServiceResponse<GetArticleDto>> UpdateArticle(UpdateArticleDto request)
 		{
-			var serviceResponse = new ServiceResponse<List<Article>>();
+			var serviceResponse = new ServiceResponse<GetArticleDto>();
 
 			try
 			{
@@ -140,7 +143,7 @@ namespace testeLeadSoft.Services.ArticleService
 
 					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await context.Articles.ToListAsync();
+					serviceResponse.Data = mapper.Map<GetArticleDto>(dbArticle);
 				} else
 				{
 					serviceResponse.Success = false;

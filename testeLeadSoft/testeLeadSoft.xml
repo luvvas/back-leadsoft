@@ -14,17 +14,17 @@
             <summary>
             Get a article by it's id
             </summary>
-            <param name="authorId"></param>
+            <param name="articleId"></param>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.ArticleController.AddArticle(testeLeadSoft.Dto.CreateArticleDto)">
+        <member name="M:testeLeadSoft.Controllers.ArticleController.AddArticle(testeLeadSoft.Dto.Article.CreateArticleDto)">
             <summary>
             Include a article on Database
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.ArticleController.UpdateArticle(testeLeadSoft.Dto.CreateArticleDto)">
+        <member name="M:testeLeadSoft.Controllers.ArticleController.UpdateArticle(testeLeadSoft.Dto.Article.UpdateArticleDto)">
             <summary>
             Update a article on Database
             </summary>

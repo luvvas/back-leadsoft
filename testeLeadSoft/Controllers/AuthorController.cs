@@ -73,7 +73,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<ServiceResponse<List<GetAuthorDto>>>> UpdateAuthor([FromBody]GetAuthorDto request)
+		public async Task<ActionResult<ServiceResponse<GetAuthorDto>>> UpdateAuthor([FromBody]GetAuthorDto request)
 		{
 			var response = await authorService.UpdateAuthor(request);
 			if(response.Data == null)

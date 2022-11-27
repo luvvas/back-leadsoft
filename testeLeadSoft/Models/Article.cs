@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace testeLeadSoft.Models
+﻿namespace testeLeadSoft.Models
 {
 	public class Article
 	{
@@ -8,13 +6,10 @@ namespace testeLeadSoft.Models
 		public string Title { get; set; }
 		public string Description { get; set; }
 		public string Text { get; set; }
-		[JsonIgnore]
 		public Author Author { get; set; }
 		public Guid AuthorId { get; set; }
-		[JsonIgnore]
 		public Category Category { get; set; }
 		public Guid CategoryId { get; set; }
-		[JsonIgnore]
 		public List<Comment> Comments { get; set; }
 	}
 }
