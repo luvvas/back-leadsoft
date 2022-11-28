@@ -21,8 +21,25 @@ The goal of this project is to create a miniblog API that manages data from a Po
 
 Clone repository
 
-    git clone https://github.com/luvvas/back-leadsoft.git
+     λ git clone https://github.com/luvvas/back-leadsoft.git
     
 or
 
-    git clone git@github.com:luvvas/back-leadsoft.git
+     λ git clone git@github.com:luvvas/back-leadsoft.git
+
+## Running
+
+Update Migrations
+
+    λ dotnet ef database update
+    
+or
+    
+    λ database-update
+    
+Run Project
+
+    λ .\testeLeadSoft
+    λ dotnet run
+
+# Project <a name="project"></a>
