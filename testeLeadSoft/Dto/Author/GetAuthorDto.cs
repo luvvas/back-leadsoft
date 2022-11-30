@@ -1,4 +1,6 @@
-﻿namespace testeLeadSoft.Dto.Author
+﻿using testeLeadSoft.Models;
+
+namespace testeLeadSoft.Dto.Author
 {
 	public class GetAuthorDto
 	{

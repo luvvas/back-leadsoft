@@ -25,6 +25,7 @@ namespace testeLeadSoft.Services.CommentService
 			try
 			{
 				serviceResponse.Data = await context.Comments.Select(c => mapper.Map<GetCommentDto>(c)).ToListAsync();
+				serviceResponse.Message = "All Comments successfully listed.";
 			} catch (Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -54,7 +55,9 @@ namespace testeLeadSoft.Services.CommentService
 					await context.SaveChangesAsync();
 
 					serviceResponse.Data = await context.Comments.Select(c => mapper.Map<GetCommentDto>(c)).ToListAsync();
-				} else
+					serviceResponse.Message = "Comment successfully created.";
+				}
+				else
 				{
 					serviceResponse.Success = false;
 					serviceResponse.Message = "Article not found";
@@ -82,7 +85,9 @@ namespace testeLeadSoft.Services.CommentService
 					await context.SaveChangesAsync();
 
 					serviceResponse.Data = mapper.Map<GetCommentDto>(dbComment);
-				} else
+					serviceResponse.Message = "Comment successfully updated.";
+				}
+				else
 				{
 					serviceResponse.Success = false;
 					serviceResponse.Message = "Comment not found.";
@@ -110,7 +115,9 @@ namespace testeLeadSoft.Services.CommentService
 					await context.SaveChangesAsync();
 
 					serviceResponse.Data = await context.Comments.Select(c => mapper.Map<GetCommentDto>(c)).ToListAsync();
-				} else
+					serviceResponse.Message = "Comment successfully deleted.";
+				}
+				else
 				{
 					serviceResponse.Success = false;
 					serviceResponse.Message = "Comment not found.";

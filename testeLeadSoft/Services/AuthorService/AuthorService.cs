@@ -35,6 +35,7 @@ namespace testeLeadSoft.Services.AuthorService
 				await context.SaveChangesAsync();
 
 				serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
+				serviceResponse.Message = "Author successfully created.";
 			} catch (Exception ex) 
 			{
 				serviceResponse.Success = false;
@@ -57,6 +58,7 @@ namespace testeLeadSoft.Services.AuthorService
 					await context.SaveChangesAsync();
 
 					serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
+					serviceResponse.Message = "Author successfully deleted.";
 				} else
 				{
 					serviceResponse.Success = false;
@@ -78,6 +80,7 @@ namespace testeLeadSoft.Services.AuthorService
 			try
 			{
 				serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
+				serviceResponse.Message = "All Authors successfully listed.";
 			} catch(Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -97,10 +100,11 @@ namespace testeLeadSoft.Services.AuthorService
 				if (author != null)
 				{
 					serviceResponse.Data = mapper.Map<GetAuthorDto>(author);
+					serviceResponse.Message = "Author successfully listed.";
 				} else
 				{
 					serviceResponse.Success = false;
-					serviceResponse.Message = "Author not found.";
+					serviceResponse.Message = "Author listed.";
 				}
 			} catch(Exception ex)
 			{
@@ -127,6 +131,7 @@ namespace testeLeadSoft.Services.AuthorService
 					await context.SaveChangesAsync();
 
 					serviceResponse.Data = mapper.Map<GetAuthorDto>(dbAuthor);
+					serviceResponse.Message = "Author successfully Updated.";
 				} else {
 					serviceResponse.Success = false;
 					serviceResponse.Message = "Author not found.";

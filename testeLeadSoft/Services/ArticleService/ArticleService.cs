@@ -42,7 +42,9 @@ namespace testeLeadSoft.Services.ArticleService
 						await context.SaveChangesAsync();
 
 						serviceResponse.Data = await context.Articles.Select(a => mapper.Map<GetArticleDto>(a)).ToListAsync();
-					} else
+						serviceResponse.Message = "Article successfully created.";
+					}
+					else
 					{
 						serviceResponse.Success = false;
 						serviceResponse.Message = "Category not found.";
@@ -74,6 +76,7 @@ namespace testeLeadSoft.Services.ArticleService
 					await context.SaveChangesAsync();
 
 					serviceResponse.Data = await context.Articles.Select(a => mapper.Map<GetArticleDto>(a)).ToListAsync();
+					serviceResponse.Message = "Article successfully deleted.";
 				} else
 				{
 					serviceResponse.Success = false;
@@ -95,6 +98,7 @@ namespace testeLeadSoft.Services.ArticleService
 			try
 			{
 				serviceResponse.Data = await context.Articles.Select(a => mapper.Map<GetArticleDto>(a)).ToListAsync();
+				serviceResponse.Message = "All Articles successfully listed.";
 			} catch(Exception ex) 
 			{ 
 				serviceResponse.Success = false;
@@ -114,6 +118,7 @@ namespace testeLeadSoft.Services.ArticleService
 				if (article != null)
 				{
 					serviceResponse.Data = mapper.Map<GetArticleDto>(article);
+					serviceResponse.Message = "Article successfully listed.";
 				} else
 				{
 					serviceResponse.Success = false;
@@ -144,6 +149,7 @@ namespace testeLeadSoft.Services.ArticleService
 					await context.SaveChangesAsync();
 
 					serviceResponse.Data = mapper.Map<GetArticleDto>(dbArticle);
+					serviceResponse.Message = "Article successfully updated.";
 				} else
 				{
 					serviceResponse.Success = false;

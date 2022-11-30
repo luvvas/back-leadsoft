@@ -33,6 +33,7 @@ namespace testeLeadSoft.Services.CategoryService
 				await context.SaveChangesAsync();
 
 				serviceResponse.Data = await context.Categories.Select(c => mapper.Map<GetCategoryDto>(c)).ToListAsync();
+				serviceResponse.Message = "Category successfully created.";
 			} catch(Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -55,6 +56,7 @@ namespace testeLeadSoft.Services.CategoryService
 					await context.SaveChangesAsync();
 
 					serviceResponse.Data = await context.Categories.Select(c => mapper.Map<GetCategoryDto>(c)).ToListAsync();
+					serviceResponse.Message = "Category successfully deleted.";
 				} else
 				{
 					serviceResponse.Success = false;
@@ -76,6 +78,7 @@ namespace testeLeadSoft.Services.CategoryService
 			try
 			{
 				serviceResponse.Data = await context.Categories.Select(c => mapper.Map<GetCategoryDto>(c)).ToListAsync();
+				serviceResponse.Message = "All Categories successfully listed.";
 			} catch (Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -100,6 +103,7 @@ namespace testeLeadSoft.Services.CategoryService
 					await context.SaveChangesAsync();
 
 					serviceResponse.Data = mapper.Map<GetCategoryDto>(dbCategory);
+					serviceResponse.Message = "Category successfully updated.";
 				} else
 				{
 					serviceResponse.Success = false;
