@@ -36,7 +36,7 @@ namespace testeLeadSoft.Services.AuthorService
 
 				serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
 				serviceResponse.Message = "Author successfully created.";
-			} catch (Exception ex) 
+			} catch (Exception ex)
 			{
 				serviceResponse.Success = false;
 				serviceResponse.Message = ex.Message;
@@ -79,7 +79,10 @@ namespace testeLeadSoft.Services.AuthorService
 
 			try
 			{
-				serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
+				// FORTE
+				var dbAuthors = await context.Authors.Include(a => a.Articles).ToListAsync();
+
+				serviceResponse.Data = dbAuthors.Select(a => mapper.Map<GetAuthorDto>(a)).ToList();
 				serviceResponse.Message = "All Authors successfully listed.";
 			} catch(Exception ex)
 			{

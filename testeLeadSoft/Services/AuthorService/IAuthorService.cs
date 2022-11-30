@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using testeLeadSoft.Dto.Author;
+﻿using testeLeadSoft.Dto.Author;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.AuthorService
