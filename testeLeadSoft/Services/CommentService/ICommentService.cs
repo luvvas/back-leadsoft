@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Comment;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.CommentService
 {
-	public interface ICommentService
+    public interface ICommentService
 	{
-		Task<ServiceResponse<List<Comment>>> Get();
-		Task<ServiceResponse<List<Comment>>> AddComment(CreateCommentDto request);
-		Task<ServiceResponse<List<Comment>>> UpdateComment(CreateCommentDto request);
-		Task<ServiceResponse<List<Comment>>> DeleteComment(Guid commentId);
+		Task<ServiceResponse<List<GetCommentDto>>> Get();
+		Task<ServiceResponse<List<GetCommentDto>>> AddComment(CreateCommentDto request);
+		Task<ServiceResponse<GetCommentDto>> UpdateComment(UpdateCommentDto request);
+		Task<ServiceResponse<List<GetCommentDto>>> DeleteComment(Guid commentId);
 	}
 }

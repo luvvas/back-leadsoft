@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using testeLeadSoft.Dto.Article;
+﻿using testeLeadSoft.Dto.Article;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.ArticleService

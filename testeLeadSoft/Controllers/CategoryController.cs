@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Category;
 using testeLeadSoft.Models;
-using testeLeadSoft.Services.AuthorService;
 using testeLeadSoft.Services.CategoryService;
 
 namespace testeLeadSoft.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class CategoryController : ControllerBase
 	{
@@ -22,7 +20,7 @@ namespace testeLeadSoft.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ActionResult<ServiceResponse<List<Category>>>> Get()
+		public async Task<ActionResult<ServiceResponse<List<CreateCategoryDto>>>> Get()
 		{
 			var response = await categoryService.Get();
 			if(response.Data == null)
@@ -39,7 +37,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCategory([FromBody]CreateCategoryDto request)
+		public async Task<ActionResult<ServiceResponse<List<CreateCategoryDto>>>> AddCategory([FromBody]CreateCategoryDto request)
 		{
 			var response = await categoryService.AddCategory(request);
 			if(response.Data == null)
@@ -56,7 +54,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<ServiceResponse<List<Author>>>> UpdateCategory([FromBody]CreateCategoryDto request)
+		public async Task<ActionResult<ServiceResponse<CreateCategoryDto>>> UpdateCategory([FromBody]GetCategoryDto request)
 		{
 			var response = await categoryService.UpdateCategory(request);
 			if(response.Data == null)
@@ -73,7 +71,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="categoryId"></param>
 		/// <returns></returns>
 		[HttpDelete("{categoryId:guid}")]
-		public async Task<ActionResult<ServiceResponse<List<Category>>>> DeleteCategory([FromRoute]Guid categoryId)
+		public async Task<ActionResult<ServiceResponse<List<CreateCategoryDto>>>> DeleteCategory([FromRoute]Guid categoryId)
 		{
 			var response = await categoryService.DeleteCategory(categoryId);
 			if(response.Data == null)

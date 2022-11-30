@@ -1,27 +1,30 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 using testeLeadSoft.Data;
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Comment;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.CommentService
 {
-	public class CommentService : ICommentService
+    public class CommentService : ICommentService
 	{
 		private readonly DataContext context;
+		private readonly IMapper mapper;
 
-		public CommentService(DataContext context) 
+		public CommentService(DataContext context, IMapper mapper) 
 		{
 			this.context = context;
+			this.mapper = mapper;
 		}
 
-		public async Task<ServiceResponse<List<Comment>>> Get()
+		public async Task<ServiceResponse<List<GetCommentDto>>> Get()
 		{
-			var serviceResponse = new ServiceResponse<List<Comment>>();
+			var serviceResponse = new ServiceResponse<List<GetCommentDto>>();
 
 			try
 			{
-				serviceResponse.Data = await context.Comments.ToListAsync();
+				serviceResponse.Data = await context.Comments.Select(c => mapper.Map<GetCommentDto>(c)).ToListAsync();
 			} catch (Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -31,9 +34,9 @@ namespace testeLeadSoft.Services.CommentService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Comment>>> AddComment(CreateCommentDto request)
+		public async Task<ServiceResponse<List<GetCommentDto>>> AddComment(CreateCommentDto request)
 		{
-			var serviceResponse = new ServiceResponse<List<Comment>>();
+			var serviceResponse = new ServiceResponse<List<GetCommentDto>>();
 
 			try
 			{
@@ -50,7 +53,7 @@ namespace testeLeadSoft.Services.CommentService
 					context.Comments.Add(newComment);
 					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await context.Comments.ToListAsync();
+					serviceResponse.Data = await context.Comments.Select(c => mapper.Map<GetCommentDto>(c)).ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;
@@ -65,9 +68,9 @@ namespace testeLeadSoft.Services.CommentService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Comment>>> UpdateComment(CreateCommentDto request)
+		public async Task<ServiceResponse<GetCommentDto>> UpdateComment(UpdateCommentDto request)
 		{
-			var serviceResponse = new ServiceResponse<List<Comment>>();
+			var serviceResponse = new ServiceResponse<GetCommentDto>();
 
 			try 
 			{
@@ -78,7 +81,7 @@ namespace testeLeadSoft.Services.CommentService
 
 					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await context.Comments.ToListAsync();
+					serviceResponse.Data = mapper.Map<GetCommentDto>(dbComment);
 				} else
 				{
 					serviceResponse.Success = false;
@@ -94,9 +97,9 @@ namespace testeLeadSoft.Services.CommentService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Comment>>> DeleteComment(Guid commentId)
+		public async Task<ServiceResponse<List<GetCommentDto>>> DeleteComment(Guid commentId)
 		{
-			var serviceResponse = new ServiceResponse<List<Comment>>();
+			var serviceResponse = new ServiceResponse<List<GetCommentDto>>();
 
 			try
 			{
@@ -106,7 +109,7 @@ namespace testeLeadSoft.Services.CommentService
 					context.Comments.Remove(dbComment);
 					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await context.Comments.ToListAsync();
+					serviceResponse.Data = await context.Comments.Select(c => mapper.Map<GetCommentDto>(c)).ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;

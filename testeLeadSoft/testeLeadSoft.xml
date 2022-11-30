@@ -78,14 +78,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.CategoryController.AddCategory(testeLeadSoft.Dto.CreateCategoryDto)">
+        <member name="M:testeLeadSoft.Controllers.CategoryController.AddCategory(testeLeadSoft.Dto.Category.CreateCategoryDto)">
             <summary>
             Include a Category on Database
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.CategoryController.UpdateCategory(testeLeadSoft.Dto.CreateCategoryDto)">
+        <member name="M:testeLeadSoft.Controllers.CategoryController.UpdateCategory(testeLeadSoft.Dto.Category.GetCategoryDto)">
             <summary>
             Update a category on Database
             </summary>
@@ -105,14 +105,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.CommentController.AddComment(testeLeadSoft.Dto.CreateCommentDto)">
+        <member name="M:testeLeadSoft.Controllers.CommentController.AddComment(testeLeadSoft.Dto.Comment.CreateCommentDto)">
             <summary>
             Include a comment on Database
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.CommentController.UpdateComment(testeLeadSoft.Dto.CreateCommentDto)">
+        <member name="M:testeLeadSoft.Controllers.CommentController.UpdateComment(testeLeadSoft.Dto.Comment.UpdateCommentDto)">
             <summary>
             Update a comment on Database
             </summary>

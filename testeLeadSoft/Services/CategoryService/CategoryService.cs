@@ -1,21 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using testeLeadSoft.Data;
-using testeLeadSoft.Dto;
+using testeLeadSoft.Dto.Article;
+using testeLeadSoft.Dto.Category;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.CategoryService
 {
-	public class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService
 	{
 		private readonly DataContext context;
-		public CategoryService(DataContext context) 
+		private readonly IMapper mapper;
+		public CategoryService(DataContext context, IMapper mapper) 
 		{
 			this.context = context;
+			this.mapper = mapper;
 		}
 
-		public async Task<ServiceResponse<List<Category>>> AddCategory(CreateCategoryDto request)
+		public async Task<ServiceResponse<List<GetCategoryDto>>> AddCategory(CreateCategoryDto request)
 		{
-			var serviceResponse = new ServiceResponse<List<Category>>();
+			var serviceResponse = new ServiceResponse<List<GetCategoryDto>>();
 
 			try 
 			{
@@ -25,10 +29,10 @@ namespace testeLeadSoft.Services.CategoryService
 					Type = request.Type
 				};
 
-				context.Categories.Add(newCategory);
+				context.Categories.Add(mapper.Map<Category>(newCategory));
 				await context.SaveChangesAsync();
 
-				serviceResponse.Data = await context.Categories.ToListAsync();
+				serviceResponse.Data = await context.Categories.Select(c => mapper.Map<GetCategoryDto>(c)).ToListAsync();
 			} catch(Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -38,9 +42,9 @@ namespace testeLeadSoft.Services.CategoryService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Category>>> DeleteCategory(Guid categoryId)
+		public async Task<ServiceResponse<List<GetCategoryDto>>> DeleteCategory(Guid categoryId)
 		{
-			var serviceResponse = new ServiceResponse<List<Category>>();
+			var serviceResponse = new ServiceResponse<List<GetCategoryDto>>();
 
 			try
 			{
@@ -50,7 +54,7 @@ namespace testeLeadSoft.Services.CategoryService
 					context.Categories.Remove(dbCategory);
 					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await context.Categories.ToListAsync();
+					serviceResponse.Data = await context.Categories.Select(c => mapper.Map<GetCategoryDto>(c)).ToListAsync();
 				} else
 				{
 					serviceResponse.Success = false;
@@ -65,13 +69,13 @@ namespace testeLeadSoft.Services.CategoryService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Category>>> Get()
+		public async Task<ServiceResponse<List<GetCategoryDto>>> Get()
 		{
-			var serviceResponse = new ServiceResponse<List<Category>>();
+			var serviceResponse = new ServiceResponse<List<GetCategoryDto>>();
 
 			try
 			{
-				serviceResponse.Data = await context.Categories.ToListAsync();
+				serviceResponse.Data = await context.Categories.Select(c => mapper.Map<GetCategoryDto>(c)).ToListAsync();
 			} catch (Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -81,9 +85,9 @@ namespace testeLeadSoft.Services.CategoryService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<List<Category>>> UpdateCategory(CreateCategoryDto request)
+		public async Task<ServiceResponse<GetCategoryDto>> UpdateCategory(GetCategoryDto request)
 		{
-			var serviceResponse = new ServiceResponse<List<Category>>();
+			var serviceResponse = new ServiceResponse<GetCategoryDto>();
 
 			try
 			{
@@ -95,7 +99,7 @@ namespace testeLeadSoft.Services.CategoryService
 
 					await context.SaveChangesAsync();
 
-					serviceResponse.Data = await context.Categories.ToListAsync();
+					serviceResponse.Data = mapper.Map<GetCategoryDto>(dbCategory);
 				} else
 				{
 					serviceResponse.Success = false;

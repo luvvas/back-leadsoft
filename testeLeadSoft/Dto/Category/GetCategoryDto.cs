@@ -1,8 +1,6 @@
-﻿using System.Text.Json.Serialization;
-
-namespace testeLeadSoft.Dto
+﻿namespace testeLeadSoft.Dto.Category
 {
-	public class CreateCategoryDto
+	public class GetCategoryDto
 	{
 		public Guid Id { get; set; }
 		public string Name { get; set; }

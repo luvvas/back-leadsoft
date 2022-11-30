@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using testeLeadSoft.Dto.Article;
 using testeLeadSoft.Models;
 using testeLeadSoft.Services.ArticleService;
 
 namespace testeLeadSoft.Controllers
 {
-    [Route("api/[controller]")]
+  [Route("api/[controller]")]
 	[ApiController]
 	public class ArticleController : ControllerBase
 	{

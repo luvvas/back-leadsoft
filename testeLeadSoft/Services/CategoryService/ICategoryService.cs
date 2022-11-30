@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using testeLeadSoft.Dto;
+﻿using testeLeadSoft.Dto.Article;
+using testeLeadSoft.Dto.Category;
 using testeLeadSoft.Models;
 
 namespace testeLeadSoft.Services.CategoryService
 {
-	public interface ICategoryService
+    public interface ICategoryService
 	{
-		Task<ServiceResponse<List<Category>>> Get();
-		Task<ServiceResponse<List<Category>>> AddCategory(CreateCategoryDto request);
-		Task<ServiceResponse<List<Category>>> UpdateCategory(CreateCategoryDto request);
-		Task<ServiceResponse<List<Category>>> DeleteCategory(Guid categoryId);
+		Task<ServiceResponse<List<GetCategoryDto>>> Get();
+		Task<ServiceResponse<List<GetCategoryDto>>> AddCategory(CreateCategoryDto request);
+		Task<ServiceResponse<GetCategoryDto>> UpdateCategory(GetCategoryDto request);
+		Task<ServiceResponse<List<GetCategoryDto>>> DeleteCategory(Guid categoryId);
 	}
 }
