@@ -97,7 +97,8 @@ namespace testeLeadSoft.Services.ArticleService
 
 			try
 			{
-				serviceResponse.Data = await context.Articles.Select(a => mapper.Map<GetArticleDto>(a)).ToListAsync();
+				var dbArticle = await context.Articles.Include(a => a.Comments).ToListAsync();
+				serviceResponse.Data = dbArticle.Select(a => mapper.Map<GetArticleDto>(a)).ToList();
 				serviceResponse.Message = "All Articles successfully listed.";
 			} catch(Exception ex) 
 			{ 
@@ -114,7 +115,7 @@ namespace testeLeadSoft.Services.ArticleService
 
 			try
 			{
-				var article = await context.Articles.FindAsync(articleId);
+				var article = await context.Articles.Include(a => a.Comments).FirstOrDefaultAsync(a => a.Id == articleId);
 				if (article != null)
 				{
 					serviceResponse.Data = mapper.Map<GetArticleDto>(article);

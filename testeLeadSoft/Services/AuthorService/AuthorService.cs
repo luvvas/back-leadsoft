@@ -99,7 +99,7 @@ namespace testeLeadSoft.Services.AuthorService
 
 			try
 			{
-				var author = await context.Authors.FindAsync(authorId);
+				var author = await context.Authors.Include(a => a.Articles).FirstOrDefaultAsync(a => a.Id == authorId);
 				if (author != null)
 				{
 					serviceResponse.Data = mapper.Map<GetAuthorDto>(author);

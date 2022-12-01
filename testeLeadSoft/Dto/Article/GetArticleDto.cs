@@ -1,4 +1,5 @@
-﻿namespace testeLeadSoft.Dto.Article
+﻿
+namespace testeLeadSoft.Dto.Article
 {
 	public class GetArticleDto
 	{
@@ -8,5 +9,6 @@
 		public string Text { get; set; }
 		public Guid AuthorId { get; set; }
 		public Guid CategoryId { get; set; }
+		public List<testeLeadSoft.Models.Comment> Comments { get; set; }
 	}
 }
