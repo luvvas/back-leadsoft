@@ -30,6 +30,14 @@ or
 
 ## Running
 
+The configuration for your database is inside appsettings.json
+
+```json
+"ConnectionStrings": {
+     "DefaultConnection": "User ID=postgres;Password=admin;Host=localhost;Port=5432;Database=postgres;Pooling=true;"
+},
+```
+
 Update Migrations
 
     λ dotnet ef database update
