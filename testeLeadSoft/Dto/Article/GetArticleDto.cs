@@ -9,6 +9,6 @@ namespace testeLeadSoft.Dto.Article
 		public string Text { get; set; }
 		public Guid AuthorId { get; set; }
 		public Guid CategoryId { get; set; }
-		public List<testeLeadSoft.Models.Comment> Comments { get; set; }
+		public List<Models.Comment> Comments { get; set; }
 	}
 }

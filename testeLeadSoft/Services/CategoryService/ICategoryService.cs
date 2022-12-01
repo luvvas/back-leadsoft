@@ -8,7 +8,7 @@ namespace testeLeadSoft.Services.CategoryService
 	{
 		Task<ServiceResponse<List<GetCategoryDto>>> Get();
 		Task<ServiceResponse<List<GetCategoryDto>>> AddCategory(CreateCategoryDto request);
-		Task<ServiceResponse<GetCategoryDto>> UpdateCategory(GetCategoryDto request);
+		Task<ServiceResponse<GetCategoryDto>> UpdateCategory(UpdateCategoryDto request);
 		Task<ServiceResponse<List<GetCategoryDto>>> DeleteCategory(Guid categoryId);
 	}
 }

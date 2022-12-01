@@ -77,7 +77,9 @@ namespace testeLeadSoft.Services.CategoryService
 
 			try
 			{
-				serviceResponse.Data = await context.Categories.Select(c => mapper.Map<GetCategoryDto>(c)).ToListAsync();
+				var dbCategories = await context.Categories.Include(c => c.Articles).ToListAsync();
+
+				serviceResponse.Data = dbCategories.Select(c => mapper.Map<GetCategoryDto>(c)).ToList();
 				serviceResponse.Message = "All Categories successfully listed.";
 			} catch (Exception ex)
 			{
@@ -88,7 +90,7 @@ namespace testeLeadSoft.Services.CategoryService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<GetCategoryDto>> UpdateCategory(GetCategoryDto request)
+		public async Task<ServiceResponse<GetCategoryDto>> UpdateCategory(UpdateCategoryDto request)
 		{
 			var serviceResponse = new ServiceResponse<GetCategoryDto>();
 

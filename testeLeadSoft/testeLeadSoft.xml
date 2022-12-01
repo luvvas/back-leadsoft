@@ -58,7 +58,7 @@
             <param name="authorId"></param>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.AuthorController.UpdateAuthor(testeLeadSoft.Dto.Author.GetAuthorDto)">
+        <member name="M:testeLeadSoft.Controllers.AuthorController.UpdateAuthor(testeLeadSoft.Dto.Author.UpdateAuthorDto)">
             <summary>
             Update a author on Database
             </summary>
@@ -85,7 +85,7 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:testeLeadSoft.Controllers.CategoryController.UpdateCategory(testeLeadSoft.Dto.Category.GetCategoryDto)">
+        <member name="M:testeLeadSoft.Controllers.CategoryController.UpdateCategory(testeLeadSoft.Dto.Category.UpdateCategoryDto)">
             <summary>
             Update a category on Database
             </summary>

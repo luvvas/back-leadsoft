@@ -80,7 +80,11 @@ namespace testeLeadSoft.Services.AuthorService
 			try
 			{
 				// FORTE
-				var dbAuthors = await context.Authors.Include(a => a.Articles).ToListAsync();
+				var dbAuthors = 
+					await context.Authors
+						.Include(a => a.Articles)
+						.ThenInclude(a => a.Comments)
+						.ToListAsync();	
 
 				serviceResponse.Data = dbAuthors.Select(a => mapper.Map<GetAuthorDto>(a)).ToList();
 				serviceResponse.Message = "All Authors successfully listed.";
@@ -99,7 +103,11 @@ namespace testeLeadSoft.Services.AuthorService
 
 			try
 			{
-				var author = await context.Authors.Include(a => a.Articles).FirstOrDefaultAsync(a => a.Id == authorId);
+				var author =
+					await context.Authors
+					.Include(a => a.Articles)
+					.ThenInclude(a => a.Comments)
+					.FirstOrDefaultAsync(a => a.Id == authorId);
 				if (author != null)
 				{
 					serviceResponse.Data = mapper.Map<GetAuthorDto>(author);
@@ -107,7 +115,7 @@ namespace testeLeadSoft.Services.AuthorService
 				} else
 				{
 					serviceResponse.Success = false;
-					serviceResponse.Message = "Author listed.";
+					serviceResponse.Message = "Author not found.";
 				}
 			} catch(Exception ex)
 			{
@@ -118,7 +126,7 @@ namespace testeLeadSoft.Services.AuthorService
 			return serviceResponse;
 		}
 
-		public async Task<ServiceResponse<GetAuthorDto>> UpdateAuthor(GetAuthorDto request)
+		public async Task<ServiceResponse<GetAuthorDto>> UpdateAuthor(UpdateAuthorDto request)
 		{
 			var serviceResponse = new ServiceResponse<GetAuthorDto>();
 

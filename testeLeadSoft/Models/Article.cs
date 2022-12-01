@@ -11,9 +11,9 @@ namespace testeLeadSoft.Models
 		[JsonIgnore]
 		public Author Author { get; set; }
 		public Guid AuthorId { get; set; }
+		[JsonIgnore]
 		public Category Category { get; set; }
 		public Guid CategoryId { get; set; }
-		[JsonIgnore]
 		public List<Comment> Comments { get; set; }
 	}
 }

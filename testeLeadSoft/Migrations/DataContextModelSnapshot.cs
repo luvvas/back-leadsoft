@@ -52,7 +52,7 @@ namespace testeLeadSoft.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("testeLeadSoft.Models.Author", b =>
@@ -74,7 +74,7 @@ namespace testeLeadSoft.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("testeLeadSoft.Models.Category", b =>
@@ -93,7 +93,7 @@ namespace testeLeadSoft.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("testeLeadSoft.Models.Comment", b =>
@@ -113,7 +113,7 @@ namespace testeLeadSoft.Migrations
 
                     b.HasIndex("ArticleId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("testeLeadSoft.Models.Article", b =>

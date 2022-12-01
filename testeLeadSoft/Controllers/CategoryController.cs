@@ -54,7 +54,7 @@ namespace testeLeadSoft.Controllers
 		/// <param name="request"></param>
 		/// <returns></returns>
 		[HttpPut]
-		public async Task<ActionResult<ServiceResponse<CreateCategoryDto>>> UpdateCategory([FromBody]GetCategoryDto request)
+		public async Task<ActionResult<ServiceResponse<CreateCategoryDto>>> UpdateCategory([FromBody]UpdateCategoryDto request)
 		{
 			var response = await categoryService.UpdateCategory(request);
 			if(response.Data == null)
