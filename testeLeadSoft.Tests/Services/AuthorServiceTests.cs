@@ -15,6 +15,7 @@ using testeLeadSoft.Models;
 using testeLeadSoft.Services.AuthorService;
 using FluentAssertions;
 using testeLeadSoft.Dto.Author;
+using Microsoft.Extensions.Options;
 
 namespace testeLeadSoft.Tests.Services
 {
@@ -29,7 +30,7 @@ namespace testeLeadSoft.Tests.Services
 			var databaseContext = new DataContext(options);
 			databaseContext.Database.EnsureCreated();
 
-			if(await databaseContext.Authors.CountAsync() <= 0)
+			if (await databaseContext.Authors.CountAsync() <= 0)
 			{
 				for (int i = 0; i < 10; i++)
 				{
@@ -48,7 +49,7 @@ namespace testeLeadSoft.Tests.Services
 		}
 
 		private readonly IMapper mapper;
-		public AuthorServiceTests() 
+		public AuthorServiceTests()
 		{
 			this.mapper = new Mock<IMapper>().Object;
 		}
@@ -66,6 +67,22 @@ namespace testeLeadSoft.Tests.Services
 			// Assert
 			result.Should().NotBeNull();
 			result.Should().BeOfType<Task<ServiceResponse<List<GetAuthorDto>>>>();
+		}
+
+		[Fact]
+		public async void AuthorService_GetAuthor_ReturnAuthor()
+		{
+			// Arrange
+			var authorId = Guid.NewGuid();
+			var dbContext = await GetDatabaseContext();
+			var authorService = new AuthorService(dbContext, mapper);
+
+			// Act
+			var result = authorService.Get(authorId);
+
+			// Assert
+			result.Should().NotBeNull();
+			result.Should().BeOfType<Task<ServiceResponse<GetAuthorDto>>>();
 		}
 	}
 }
