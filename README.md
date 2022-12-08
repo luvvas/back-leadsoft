@@ -96,6 +96,18 @@ The base url is *http://localhost:7269*
 }
 ```
 
+**Response example**
+```json
+  "data": {
+    "id": "<AUTHOR_ID>",
+    "firstName": "John1",
+    "lastName": "Doe1",
+    "age": 21
+  },
+  "success": true,
+  "message": "string"
+```
+
 ### **Update an Author**
 
      PUT /Author/:id
@@ -110,10 +122,6 @@ The base url is *http://localhost:7269*
 }
 ```
 
-### **Get an Author**
-
-     GET /Author/:id
-
 **Response example**
 ```json
   "data": {
@@ -126,6 +134,39 @@ The base url is *http://localhost:7269*
   "message": "string"
 ```
 
+### **Get an Author**
+
+     GET /Author/:id
+
+**Response example**
+```json
+  "data": {
+    "id": "<AUTHOR_ID>",
+    "firstName": "John1",
+    "lastName": "Doe1",
+    "age": 21,
+    "articles": [
+      {
+        "id": "<ARTICLE_ID>",
+        "title": "teste",
+        "description": "teste",
+        "text": "teste",
+        "authorId": "<AUTHOR_ID>",
+        "categoryId": "<CATEGORY_ID>",
+        "comments": [
+          {
+            "id": "<COMMENTARY_ID>",
+            "text": "teste",
+            "articleId": "<ARTICLE_ID>"
+          }
+        ]
+      }
+    ]
+  },
+  "success": true,
+  "message": "string"
+```
+
 ### **Get all Authors**
 
      GET /Author/
@@ -133,28 +174,36 @@ The base url is *http://localhost:7269*
 **Response example**
 ```json
 {
-  "data": [
-    {
-      "id": "<AUTHOR_ID>",
-      "firstName": "John1",
-      "lastName": "Doe1",
-      "age": 21
+  "data": {
+      "id": "067220df-ae94-41c8-9452-f4fcf2805cf3",
+      "firstName": "Caroline",
+      "lastName": "Alves Machado",
+      "age": 27,
+      "articles": [
+        {
+          "id": "86703122-878a-43bf-996e-ca4285aefa0d",
+          "title": "teste2",
+          "description": "teste2",
+          "text": "teste2",
+          "authorId": "067220df-ae94-41c8-9452-f4fcf2805cf3",
+          "categoryId": "9553087f-688f-4a4c-ab21-334a6b69525c",
+          "comments": [
+            {
+              "id": "c7a0f525-0a22-425b-947f-60b183c7be62",
+              "text": "Testando pra krl",
+              "articleId": "86703122-878a-43bf-996e-ca4285aefa0d"
+            },
+            {
+              "id": "40561caf-adcf-49a5-9a50-e21e5a8b4050",
+              "text": "Oii!",
+              "articleId": "86703122-878a-43bf-996e-ca4285aefa0d"
+            }
+          ]
+        }
+      ]
     },
-    {
-      "id": "<AUTHOR_ID>",
-      "firstName": "John2",
-      "lastName": "Doe2",
-      "age": 22
-    },
-    {
-      "id": "<AUTHOR_ID>",
-      "firstName": "John3",
-      "lastName": "Doe3",
-      "age": 23
-    },
-  ],
-  "success": true,
-  "message": ""
+    "success": true,
+    "message": "Author successfully listed."
 }
 ```
 
