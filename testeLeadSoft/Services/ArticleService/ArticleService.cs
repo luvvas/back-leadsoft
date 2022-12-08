@@ -23,8 +23,11 @@ namespace testeLeadSoft.Services.ArticleService
 			try
 			{
 				var author = await context.Authors.FindAsync(request.AuthorId);
+				var article = await context.Articles
+					.Where(a => a.Title == request.Title)
+					.FirstOrDefaultAsync();
 
-				if (author != null)
+				if (author != null && article == null)
 				{
 					var category = await context.Categories.FindAsync(request.CategoryId);
 					if (category != null)
@@ -49,10 +52,14 @@ namespace testeLeadSoft.Services.ArticleService
 						serviceResponse.Success = false;
 						serviceResponse.Message = "Category not found.";
 					}
-				} else
+				} else if (author == null)
 				{
 					serviceResponse.Success = false;
 					serviceResponse.Message = "Author not found.";
+				} else if (article != null)
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "This Article already Exists.";
 				}
 			} catch (Exception ex)
 			{
@@ -141,7 +148,11 @@ namespace testeLeadSoft.Services.ArticleService
 			try
 			{
 				var dbArticle = await context.Articles.FindAsync(request.Id);
-				if(dbArticle != null)
+				var dbArticleAlreadyExists = await context.Articles
+					.Where(a => a.Title == request.Title)
+					.FirstOrDefaultAsync();
+
+				if(dbArticle != null && dbArticleAlreadyExists == null)
 				{
 					dbArticle.Title = request.Title;
 					dbArticle.Description = request.Description;
@@ -151,10 +162,14 @@ namespace testeLeadSoft.Services.ArticleService
 
 					serviceResponse.Data = mapper.Map<GetArticleDto>(dbArticle);
 					serviceResponse.Message = "Article successfully updated.";
-				} else
+				} else if (dbArticle == null)
 				{
 					serviceResponse.Success = false;
-					serviceResponse.Message = "Article not found";
+					serviceResponse.Message = "Article not found.";
+				} else if (dbArticleAlreadyExists != null)
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "This Article already exists.";
 				}
 			} catch (Exception ex)
 			{
