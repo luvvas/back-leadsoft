@@ -24,18 +24,28 @@ namespace testeLeadSoft.Services.AuthorService
 
 			try 
 			{
-				var newAuthor = new Author
+				var dbAuthor = await context.Authors
+					.Where(a => a.FirstName.Equals(request.FirstName) && a.LastName.Equals(request.LastName)).FirstOrDefaultAsync();
+
+				if(dbAuthor == null)
 				{
-					FirstName = request.FirstName,
-					LastName = request.LastName,
-					Age = request.Age
-				};
+					var newAuthor = new Author
+					{
+						FirstName = request.FirstName,
+						LastName = request.LastName,
+						Age = request.Age
+					};
 
-				context.Authors.Add(mapper.Map<Author>(newAuthor));
-				await context.SaveChangesAsync();
+					context.Authors.Add(mapper.Map<Author>(newAuthor));
+					await context.SaveChangesAsync();
 
-				serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
-				serviceResponse.Message = "Author successfully created.";
+					serviceResponse.Data = await context.Authors.Select(a => mapper.Map<GetAuthorDto>(a)).ToListAsync();
+					serviceResponse.Message = "Author successfully created.";
+				} else
+				{
+					serviceResponse.Success = false;
+					serviceResponse.Message = "This Author already exists";
+				}
 			} catch (Exception ex)
 			{
 				serviceResponse.Success = false;
@@ -133,7 +143,11 @@ namespace testeLeadSoft.Services.AuthorService
 			try
 			{
 				var dbAuthor = await context.Authors.FindAsync(request.Id);
-				if (dbAuthor != null)
+				var dbAuthorAlreadyExists = await context.Authors
+					.Where(a => a.FirstName.Equals(request.FirstName) && a.LastName.Equals(request.LastName))
+					.FirstOrDefaultAsync();
+				
+				if (dbAuthor != null && dbAuthorAlreadyExists == null)
 				{
 					dbAuthor.FirstName = request.FirstName;
 					dbAuthor.LastName = request.LastName;
@@ -143,9 +157,12 @@ namespace testeLeadSoft.Services.AuthorService
 
 					serviceResponse.Data = mapper.Map<GetAuthorDto>(dbAuthor);
 					serviceResponse.Message = "Author successfully Updated.";
-				} else {
+				} else if (dbAuthor == null){
 					serviceResponse.Success = false;
 					serviceResponse.Message = "Author not found.";
+				} else if (dbAuthorAlreadyExists != null) {
+					serviceResponse.Success = false;
+					serviceResponse.Message = "This Author already exists.";
 				}
 			} catch(Exception ex)
 			{
