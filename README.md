@@ -176,26 +176,26 @@ The base url is *http://localhost:7269*
 {
   "data": {
       "id": "067220df-ae94-41c8-9452-f4fcf2805cf3",
-      "firstName": "Caroline",
-      "lastName": "Alves Machado",
-      "age": 27,
+      "firstName": "John",
+      "lastName": "Doe",
+      "age": 21,
       "articles": [
         {
           "id": "86703122-878a-43bf-996e-ca4285aefa0d",
-          "title": "teste2",
-          "description": "teste2",
-          "text": "teste2",
+          "title": "teste",
+          "description": "teste",
+          "text": "teste",
           "authorId": "067220df-ae94-41c8-9452-f4fcf2805cf3",
           "categoryId": "9553087f-688f-4a4c-ab21-334a6b69525c",
           "comments": [
             {
               "id": "c7a0f525-0a22-425b-947f-60b183c7be62",
-              "text": "Testando pra krl",
+              "text": "teste",
               "articleId": "86703122-878a-43bf-996e-ca4285aefa0d"
             },
             {
               "id": "40561caf-adcf-49a5-9a50-e21e5a8b4050",
-              "text": "Oii!",
+              "text": "teste",
               "articleId": "86703122-878a-43bf-996e-ca4285aefa0d"
             }
           ]
